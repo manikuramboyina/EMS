@@ -3,11 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
        xmlns:p="http://primefaces.org/ui"
-       xmlns:f="http://java.sun.com/jsf/core">
+       xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
+        <ui:composition>
                 <p:menubar>
                 <p:menuitem value="Home" url="/faces/index.xhtml" />
                 <p:submenu label="Exam" icon="ui-icon-document">
@@ -33,10 +35,11 @@
                 </p:submenu>
 
                 <f:facet name="options">
-                    <p:inputText style="margin-right:10px" placeholder="Search"/>
-                    <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+                    <p:outputLabel id="userName" value="Login Name" style="margin-right:10px"/>
+                    <p:commandLink type="button" value="Logout" />
                 </f:facet>
             </p:menubar>
+            </ui:composition>
     </h:body>
 </html>
 

@@ -2,31 +2,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         <ui:composition template="/templates/pagetemplate.xhtml">
-            <ui:define name="footer">
-                <h:outputLabel value="You are in the Footer Section"/>
-            </ui:define>
+
             <ui:define name="content">
-                <!--<h:graphicImage value=""/>-->
-                <div>
-                    Question:
-                    <div><h:inputTextarea id="question" /></div>
-<!--                    <div> 
-                   
-                    </div>-->
-                    <div>
+               <p:panelGrid>
+                    <h:outputLabel>Question:</h:outputLabel>
+                    <h:inputTextarea id="question" />
+                    
                         <h:commandButton id="submit" value="Save"/>
                         <h:commandButton id="cancel" value="Cancel"/>
-                    </div>
-                </div>
-                <h:outputText value="You are in the Main Content Section"/>
-
+                </p:panelGrid>
             </ui:define>
+              
         </ui:composition>
     </h:body>
 </html>
