@@ -11,12 +11,12 @@
     </h:head>
     <h:body>
         <ui:composition template="/templates/pagetemplate.xhtml">
-            <ui:define name="footer">
-                <h:outputLabel value="You are in the Footer Section"/>
-            </ui:define>
             <ui:define name="content">
                 <!--<h:graphicImage value=""/>-->
                 <h:outputText value="You are in the Main Content Section"/>
+            </ui:define>
+             <ui:define name="footer">
+                <h:outputLabel value="You are in the Footer Section"/>
             </ui:define>
         </ui:composition>
     </h:body>
