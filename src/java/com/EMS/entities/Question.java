@@ -22,6 +22,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 /**
@@ -50,6 +52,7 @@ public class Question extends AbstractEntity implements Serializable {
     
     private String createdBy;
     
+    @Temporal(TemporalType.DATE)
     private Date createdOn;
 
     public String getCreatedBy() {
