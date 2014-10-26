@@ -6,32 +6,29 @@
 package com.EMS.entities;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
+import java.sql.Date;
+import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import org.primefaces.component.password.Password;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author mani
  */
 @Entity
-public class User extends AbstractEntity implements Serializable {
+public class ExamPaper extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @Basic(optional = false)
-    private String password;
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
     
+    private Date createdOn;
+    
+    @OneToOne
+    private CourseModule module;
+    
+    private Collection<Section> sections;
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -42,10 +39,10 @@ public class User extends AbstractEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+        if (!(object instanceof ExamPaper)) {
             return false;
         }
-        User other = (User) object;
+        ExamPaper other = (ExamPaper) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -54,7 +51,7 @@ public class User extends AbstractEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "com.EMS.entities.User[ id=" + id + ",password="+password+" ]";
+        return "com.EMS.entities.ExamPaper[ id=" + id + " ]";
     }
     
 }

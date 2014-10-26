@@ -6,7 +6,9 @@
 package com.EMS.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,12 +22,30 @@ import javax.persistence.OneToMany;
  * @author mani
  */
 @Entity
-public class Module extends AbstractEntity implements Serializable {
+public class CourseModule extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    @Basic(optional = false)
     private String name;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Question> questions;
+    
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "coursemodule")
+    private Collection<Question> questions;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Collection<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Collection<Question> questions) {
+        this.questions = questions;
+    }
 
     @Override
     public int hashCode() {
@@ -37,10 +57,10 @@ public class Module extends AbstractEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Module)) {
+        if (!(object instanceof CourseModule)) {
             return false;
         }
-        Module other = (Module) object;
+        CourseModule other = (CourseModule) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

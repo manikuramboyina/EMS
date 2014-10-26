@@ -6,6 +6,7 @@
 package com.EMS.entities;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,7 @@ import javax.persistence.Id;
 public class Subject extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    @Basic(optional = false)
     private String tagName;
 
     public String getTagName() {

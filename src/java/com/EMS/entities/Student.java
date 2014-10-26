@@ -6,31 +6,42 @@
 package com.EMS.entities;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
+import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import org.primefaces.component.password.Password;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author mani
  */
 @Entity
-public class User extends AbstractEntity implements Serializable {
+public class Student extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    private String name;
+    
+    @OneToMany
+    private Collection<CourseModule> enrolledModules;
 
-    @Basic(optional = false)
-    private String password;
-
-    public String getPassword() {
-        return password;
+    public String getName() {
+        return name;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setName(String name) {
+        this.name = name;
     }
+
+    public Collection<CourseModule> getEnrolledModules() {
+        return enrolledModules;
+    }
+
+    public void setEnrolledModules(Collection<CourseModule> enrolledModules) {
+        this.enrolledModules = enrolledModules;
+    }
+    
     
     @Override
     public int hashCode() {
@@ -42,10 +53,10 @@ public class User extends AbstractEntity implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+        if (!(object instanceof Student)) {
             return false;
         }
-        User other = (User) object;
+        Student other = (Student) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -54,7 +65,7 @@ public class User extends AbstractEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "com.EMS.entities.User[ id=" + id + ",password="+password+" ]";
+        return "com.EMS.entities.Student[ id=" + id + " ]";
     }
     
 }
