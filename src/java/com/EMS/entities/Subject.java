@@ -6,11 +6,14 @@
 package com.EMS.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashMap;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
@@ -22,6 +25,17 @@ public class Subject extends AbstractEntity implements Serializable {
     
     @Basic(optional = false)
     private String tagName;
+    
+    @ManyToMany(mappedBy = "subjects")
+    private Collection<Question> questions;
+
+    public Collection<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Collection<Question> questions) {
+        this.questions = questions;
+    }
 
     public String getTagName() {
         return tagName;

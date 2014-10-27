@@ -45,15 +45,18 @@
                             </f:facet>
                             <h:outputText value="#{item.coursemodule}"/>
                         </p:column>
-                        <p:column>
+<!--                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListQuestionViewLink}"/>
                            
                             </f:facet>
-                        <ui:repeat value="#{item.subjects}" var="subject">
-                        <h:outputText value="#{subject.tagName}"/>
-                        </ui:repeat>        
-                        </p:column>
+                            <p:dataTable var="s" value="#{item.subjects}">
+                                <p:column>
+                                <p:outputLabel value="#{s.tagName}"/>  
+                                </p:column>
+                             </p:dataTable>
+                        </p:column>-->
+                        
                         <p:column>
                             <f:facet name="header">
                              <h:outputText value="#{bundle.ListQuestionTitle_id}"/>

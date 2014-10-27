@@ -37,6 +37,9 @@ public class QuestionController implements Serializable {
         }
         return current;
     }
+    public void setSelected(Question selected) {
+       current = selected;
+    }
 
     private QuestionFacade getFacade() {
         return ejbFacade;

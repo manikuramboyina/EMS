@@ -24,13 +24,14 @@
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="#{bundle.CreateSubjectLabel_tagName}" for="subjectTags" />
-                        <p:selectManyMenu id="subjectTags" value="#{questionController.selected.subjects}" >
-                            <f:selectItems value="#{subjectController.itemsAvailableSelectMany}"
-                                           var="subjectItem"
-                                           itemValue="#{subjectItem}"/>
-                        </p:selectManyMenu>                       
-                        <p:outputLabel value="#{bundle.CreateQuestionLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{questionController.selected.id}" title="#{bundle.CreateQuestionTitle_id}" />
+                        <p:selectManyMenu id="subjectTags" required="true" value="#{questionController.selected.subjects}">
+                             <f:selectItems value="#{subjectController.itemsAvailableSelectMany}" 
+                                            var="subjectItem" itemValue="#{subjectItem}" 
+                                            itemLabel="#{subjectItem.tagName}"></f:selectItems>
+                        <f:converter converterId="com.EMS.entities.util.SubjectConverter" />
+                        </p:selectManyMenu >                     
+                          <p:outputLabel value="#{bundle.CreateQuestionLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{questionController.selected.id}" title="#{bundle.CreateQuestionTitle_id}" />                     
                     </p:panelGrid>
                     <p:commandButton actionListener="#{questionController.create}" value="#{bundle.Save}" update="display,:QuestionListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuestionCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="QuestionCreateDialog.hide()"/>

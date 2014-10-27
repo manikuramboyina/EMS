@@ -22,6 +22,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
@@ -46,8 +48,14 @@ public class Question extends AbstractEntity implements Serializable {
     @Basic(optional = false)
     private Integer marks;
         
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name = "QUESTION_SUBJECT", joinColumns = {
+    @JoinColumn(name = "QUESTION_ID")}, inverseJoinColumns = {
+    @JoinColumn(name = "SUBJECT_ID")})
     private Collection<Subject> subjects;
+    
+    @Enumerated(EnumType.STRING)
+    
     
     public Integer getMarks() {
         return marks;
