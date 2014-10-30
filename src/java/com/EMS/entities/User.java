@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import org.primefaces.component.password.Password;
 
 /**
@@ -23,6 +24,44 @@ public class User extends AbstractEntity implements Serializable {
 
     @Basic(optional = false)
     private String password;
+    @Basic(optional = false)
+    private String loginId;
+    @Basic(optional = false) private String isFirstLogin;
+    @Basic(optional = false) private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getIsFirstLogin() {
+        return isFirstLogin;
+    }
+
+    public void setIsFirstLogin(String isFirstLogin) {
+        this.isFirstLogin = isFirstLogin;
+    }
+    @OneToOne(mappedBy="user") private Student student;
+//    @OneToOne(mappedBy="user") private Lecturer lecturer;
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 
     public String getPassword() {
         return password;

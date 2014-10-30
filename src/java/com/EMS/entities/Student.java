@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -22,6 +23,15 @@ public class Student extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private String name;
+    @OneToOne private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     
     @OneToMany
     private Collection<CourseModule> enrolledModules;
