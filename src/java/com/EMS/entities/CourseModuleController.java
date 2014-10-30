@@ -34,7 +34,7 @@ public class CourseModuleController implements Serializable {
     }
 
     public void setSelected(CourseModule selected) {
-        
+
     }
 
     protected void setEmbeddableKeys() {
