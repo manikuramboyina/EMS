@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author Saurav
  */
 @Stateless
-public class StudentFacade extends AbstractFacade<Student> {
+public class ExamPaperFacade extends AbstractFacade<ExamPaper> {
     @PersistenceContext(unitName = "EMSPU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class StudentFacade extends AbstractFacade<Student> {
         return em;
     }
 
-    public StudentFacade() {
-        super(Student.class);
+    public ExamPaperFacade() {
+        super(ExamPaper.class);
     }
     
 }

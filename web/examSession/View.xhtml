@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewExamSessionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewExamSessionLabel_student}"/>
+                    <h:outputText value="#{examSessionController.selected.student}" title="#{bundle.ViewExamSessionTitle_student}"/>
+                    <h:outputText value="#{bundle.ViewExamSessionLabel_startTime}"/>
+                    <h:outputText value="#{examSessionController.selected.startTime}" title="#{bundle.ViewExamSessionTitle_startTime}"/>
+                    <h:outputText value="#{bundle.ViewExamSessionLabel_duration}"/>
+                    <h:outputText value="#{examSessionController.selected.duration}" title="#{bundle.ViewExamSessionTitle_duration}"/>
+                    <h:outputText value="#{bundle.ViewExamSessionLabel_location}"/>
+                    <h:outputText value="#{examSessionController.selected.location}" title="#{bundle.ViewExamSessionTitle_location}"/>
+                    <h:outputText value="#{bundle.ViewExamSessionLabel_examPaper}"/>
+                    <h:outputText value="#{examSessionController.selected.examPaper}" title="#{bundle.ViewExamSessionTitle_examPaper}"/>
+                    <h:outputText value="#{bundle.ViewExamSessionLabel_dateOfExam}"/>
+                    <h:outputText value="#{examSessionController.selected.dateOfExam}" title="#{bundle.ViewExamSessionTitle_dateOfExam}"/>
+                    <h:outputText value="#{bundle.ViewExamSessionLabel_id}"/>
+                    <h:outputText value="#{examSessionController.selected.id}" title="#{bundle.ViewExamSessionTitle_id}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{examSessionController.destroyAndView}" value="#{bundle.ViewExamSessionDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewExamSessionEditLink}"/>
+                <br />
+                <h:commandLink action="#{examSessionController.prepareCreate}" value="#{bundle.ViewExamSessionCreateLink}" />
+                <br />
+                <h:commandLink action="#{examSessionController.prepareList}" value="#{bundle.ViewExamSessionShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewExamSessionIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

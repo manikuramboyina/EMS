@@ -3,38 +3,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition>
-
-        <p:dialog id="UserEditDlg" widgetVar="UserEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditUserTitle}">
-            <h:form id="UserEditForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{userController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditUserLabel_role}" for="role" />
-                        <p:inputText id="role" value="#{userController.selected.role}" title="#{bundle.EditUserTitle_role}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_role}"/>
-                        <p:outputLabel value="#{bundle.EditUserLabel_isFirstLogin}" for="isFirstLogin" />
-                        <p:inputText id="isFirstLogin" value="#{userController.selected.isFirstLogin}" title="#{bundle.EditUserTitle_isFirstLogin}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_isFirstLogin}"/>
-                        <p:outputLabel value="#{bundle.EditUserLabel_loginId}" for="loginId" />
-                        <p:inputText id="loginId" value="#{userController.selected.loginId}" title="#{bundle.EditUserTitle_loginId}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_loginId}"/>
-                        <p:outputLabel value="#{bundle.EditUserLabel_student}" for="student" />
-                        <p:selectOneMenu id="student" value="#{userController.selected.student}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{studentController.itemsAvailableSelectOne}"
-                                           var="studentItem"
-                                           itemValue="#{studentItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditUserLabel_password}" for="password" />
-                        <p:inputText id="password" value="#{userController.selected.password}" title="#{bundle.EditUserTitle_password}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_password}"/>
-                        <p:outputLabel value="#{bundle.EditUserLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{userController.selected.id}" title="#{bundle.EditUserTitle_id}" />
-                    </p:panelGrid>
-                    <p:commandButton actionListener="#{userController.update}" value="#{bundle.Save}" update="display,:UserListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UserEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="UserEditDialog.hide()"/>
-                </h:panelGroup>
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditUserTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditUserLabel_role}" for="role" />
+                    <h:inputText id="role" value="#{userController.selected.role}" title="#{bundle.EditUserTitle_role}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_role}"/>
+                    <h:outputLabel value="#{bundle.EditUserLabel_isFirstLogin}" for="isFirstLogin" />
+                    <h:inputText id="isFirstLogin" value="#{userController.selected.isFirstLogin}" title="#{bundle.EditUserTitle_isFirstLogin}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_isFirstLogin}"/>
+                    <h:outputLabel value="#{bundle.EditUserLabel_loginId}" for="loginId" />
+                    <h:inputText id="loginId" value="#{userController.selected.loginId}" title="#{bundle.EditUserTitle_loginId}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_loginId}"/>
+                    <h:outputLabel value="#{bundle.EditUserLabel_student}" for="student" />
+                    <h:selectOneMenu id="student" value="#{userController.selected.student}" title="#{bundle.EditUserTitle_student}" >
+                        <f:selectItems value="#{studentController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditUserLabel_password}" for="password" />
+                    <h:inputText id="password" value="#{userController.selected.password}" title="#{bundle.EditUserTitle_password}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_password}"/>
+                    <h:outputLabel value="#{bundle.EditUserLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{userController.selected.id}" title="#{bundle.EditUserTitle_id}" />
+                </h:panelGrid>
+                <h:commandLink action="#{userController.update}" value="#{bundle.EditUserSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditUserViewLink}"/>
+                <br />
+                <h:commandLink action="#{userController.prepareList}" value="#{bundle.EditUserShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditUserIndexLink}" />
             </h:form>
-        </p:dialog>
-
+        </ui:define>
     </ui:composition>
+
 </html>

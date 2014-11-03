@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -27,8 +28,9 @@ public class ExamPaper extends AbstractEntity implements Serializable {
 
     @OneToOne
     private CourseModule module;
-
-    private Collection<Section> sections;
+    
+    @OneToMany (mappedBy = "examPaper")
+    private Collection<Section> section;
 
     @Override
     public int hashCode() {

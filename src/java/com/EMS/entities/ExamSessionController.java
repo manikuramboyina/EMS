@@ -16,29 +16,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("studentController")
+@Named("examSessionController")
 @SessionScoped
-public class StudentController implements Serializable {
+public class ExamSessionController implements Serializable {
 
-    private Student current;
+    private ExamSession current;
     private DataModel items = null;
     @EJB
-    private com.EMS.entities.StudentFacade ejbFacade;
+    private com.EMS.entities.ExamSessionFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public StudentController() {
+    public ExamSessionController() {
     }
 
-    public Student getSelected() {
+    public ExamSession getSelected() {
         if (current == null) {
-            current = new Student();
+            current = new ExamSession();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private StudentFacade getFacade() {
+    private ExamSessionFacade getFacade() {
         return ejbFacade;
     }
 
@@ -66,13 +66,13 @@ public class StudentController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Student) getItems().getRowData();
+        current = (ExamSession) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Student();
+        current = new ExamSession();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -80,7 +80,7 @@ public class StudentController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("StudentCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ExamSessionCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -89,7 +89,7 @@ public class StudentController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Student) getItems().getRowData();
+        current = (ExamSession) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -97,7 +97,7 @@ public class StudentController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("StudentUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ExamSessionUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -106,7 +106,7 @@ public class StudentController implements Serializable {
     }
 
     public String destroy() {
-        current = (Student) getItems().getRowData();
+        current = (ExamSession) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -130,7 +130,7 @@ public class StudentController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("StudentDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ExamSessionDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -186,21 +186,21 @@ public class StudentController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public Student getStudent(java.lang.Long id) {
+    public ExamSession getExamSession(java.lang.Long id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Student.class)
-    public static class StudentControllerConverter implements Converter {
+    @FacesConverter(forClass = ExamSession.class)
+    public static class ExamSessionControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            StudentController controller = (StudentController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "studentController");
-            return controller.getStudent(getKey(value));
+            ExamSessionController controller = (ExamSessionController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "examSessionController");
+            return controller.getExamSession(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -220,11 +220,11 @@ public class StudentController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Student) {
-                Student o = (Student) object;
+            if (object instanceof ExamSession) {
+                ExamSession o = (ExamSession) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Student.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + ExamSession.class.getName());
             }
         }
 

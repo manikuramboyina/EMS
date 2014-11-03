@@ -28,10 +28,11 @@ public class ExamSession extends AbstractEntity implements Serializable {
     private ExamPaper examPaper;
     private Date dateOfExam;
     private Time startTime;
-    private Time duration;
+    
+    private Integer duration;
     private String location;
     
-    @Basic(optional = false)
+    @ManyToOne
     private Student student;
 
     public Student getStudent() {
@@ -50,11 +51,11 @@ public class ExamSession extends AbstractEntity implements Serializable {
         this.startTime = startTime;
     }
 
-    public Time getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(Time duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

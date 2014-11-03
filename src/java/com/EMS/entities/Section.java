@@ -13,6 +13,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -27,6 +28,9 @@ public class Section extends AbstractEntity implements Serializable {
 
     private Long sectionTotalMarks;
 
+    @ManyToOne
+    private ExamPaper examPaper;
+    
     @Enumerated(EnumType.STRING)
     private SectionTypes sectionType;
 

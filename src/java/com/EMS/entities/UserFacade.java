@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.EMS.entities;
 
 import javax.ejb.Stateless;
@@ -12,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Santan
+ * @author Saurav
  */
 @Stateless
 public class UserFacade extends AbstractFacade<User> {
