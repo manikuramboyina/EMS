@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class SubjectFacade extends AbstractFacade<Subject> {
+
     @PersistenceContext(unitName = "EMSPU")
     private EntityManager em;
 
@@ -26,5 +27,5 @@ public class SubjectFacade extends AbstractFacade<Subject> {
     public SubjectFacade() {
         super(Subject.class);
     }
-    
+
 }

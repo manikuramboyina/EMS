@@ -8,6 +8,7 @@ package com.EMS.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,14 +21,26 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class ExamSession extends AbstractEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @ManyToOne
     private ExamPaper examPaper;
-    
     private Date dateOfExam;
-    
     private Time startTime;
+    private Time duration;
+    private String location;
+    
+    @Basic(optional = false)
+    private Student student;
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 
     public Time getStartTime() {
         return startTime;
@@ -52,10 +65,6 @@ public class ExamSession extends AbstractEntity implements Serializable {
     public void setLocation(String location) {
         this.location = location;
     }
-    
-    private Time duration;
-    
-    private String location;
 
     public ExamPaper getExamPaper() {
         return examPaper;
@@ -97,5 +106,5 @@ public class ExamSession extends AbstractEntity implements Serializable {
     public String toString() {
         return "com.EMS.entities.ExamSession[ id=" + id + " ]";
     }
-    
+
 }

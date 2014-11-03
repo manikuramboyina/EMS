@@ -20,13 +20,14 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class ExamPaper extends AbstractEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     private Date createdOn;
-    
+
     @OneToOne
     private CourseModule module;
-    
+
     private Collection<Section> sections;
 
     @Override
@@ -53,5 +54,5 @@ public class ExamPaper extends AbstractEntity implements Serializable {
     public String toString() {
         return "com.EMS.entities.ExamPaper[ id=" + id + " ]";
     }
-    
+
 }

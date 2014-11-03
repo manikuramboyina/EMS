@@ -20,14 +20,15 @@ import javax.persistence.Id;
  */
 @Entity
 public class Section extends AbstractEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     private String sectionName;
-    
+
     private Long sectionTotalMarks;
-    
+
     @Enumerated(EnumType.STRING)
-    private SectionTypes sectionType; 
+    private SectionTypes sectionType;
 
     public String getSectionName() {
         return sectionName;
@@ -52,7 +53,6 @@ public class Section extends AbstractEntity implements Serializable {
     public void setSectionType(SectionTypes sectionType) {
         this.sectionType = sectionType;
     }
-    
 
     @Override
     public int hashCode() {
@@ -78,5 +78,5 @@ public class Section extends AbstractEntity implements Serializable {
     public String toString() {
         return "com.EMS.entities.Section[ id=" + id + " ]";
     }
-    
+
 }

@@ -23,11 +23,12 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class CourseModule extends AbstractEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Basic(optional = false)
     private String name;
-    
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "coursemodule")
     private Collection<Question> questions;
 
@@ -71,5 +72,5 @@ public class CourseModule extends AbstractEntity implements Serializable {
     public String toString() {
         return "com.EMS.entities.Module[ id=" + id + " ]";
     }
-    
+
 }

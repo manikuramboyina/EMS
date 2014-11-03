@@ -10,8 +10,8 @@ package com.EMS.enums;
  * @author mani
  */
 public enum SectionTypes {
-    
+
     MANUAL,
     AUTOMATIC;
-    
+
 }

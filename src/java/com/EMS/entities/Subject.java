@@ -21,11 +21,12 @@ import javax.persistence.ManyToMany;
  */
 @Entity
 public class Subject extends AbstractEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Basic(optional = false)
     private String tagName;
-    
+
     @ManyToMany(mappedBy = "subjects")
     private Collection<Question> questions;
 
@@ -69,5 +70,5 @@ public class Subject extends AbstractEntity implements Serializable {
     public String toString() {
         return "com.EMS.entities.Subject[ id=" + id + " ]";
     }
-    
+
 }
