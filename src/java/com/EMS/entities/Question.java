@@ -9,8 +9,12 @@ import com.EMS.enums.QuestionTypes;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import javax.faces.view.ViewScoped;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Converter;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -33,9 +37,11 @@ import javax.persistence.OneToMany;
  *
  * @author mani
  */
+@ViewScoped
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "QuestionType")
+@DiscriminatorValue("ESSAY")
 public class Question extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -52,10 +58,19 @@ public class Question extends AbstractEntity implements Serializable {
     @JoinTable(name = "QUESTION_SUBJECT", joinColumns = {
     @JoinColumn(name = "QUESTION_ID")}, inverseJoinColumns = {
     @JoinColumn(name = "SUBJECT_ID")})
-    private Collection<Subject> subjects;
+    private List<Subject> subjects;
     
+    @Basic(optional = true)
     @Enumerated(EnumType.STRING)
-    
+    private QuestionTypes typeOfQuestion;
+
+    public QuestionTypes getTypeOfQuestion() {
+        return typeOfQuestion;
+    }
+
+    public void setTypeOfQuestion(QuestionTypes typeOfQuestion) {
+        this.typeOfQuestion = typeOfQuestion;
+    }
     
     public Integer getMarks() {
         return marks;
@@ -83,11 +98,11 @@ public class Question extends AbstractEntity implements Serializable {
     }
 
 
-    public Collection<Subject> getSubjects() {
+    public List<Subject> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(Collection<Subject> subjects) {
+    public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
     }
 

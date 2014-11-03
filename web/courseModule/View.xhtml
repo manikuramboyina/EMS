@@ -8,16 +8,16 @@
 
     <ui:composition>
 
-        <p:dialog id="CourseModuleViewDlg" widgetVar="CourseModuleViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCourseModuleTitle}">
+        <p:dialog id="CourseModuleViewDlg" widgetVar="CourseModuleViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{multiAnswerBundle.ViewCourseModuleTitle}">
             <h:form id="CourseModuleViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{courseModuleController.selected != null}">
-                        <h:outputText value="#{bundle.ViewCourseModuleLabel_name}"/>
-                        <h:outputText value="#{courseModuleController.selected.name}" title="#{bundle.ViewCourseModuleTitle_name}"/>
-                        <h:outputText value="#{bundle.ViewCourseModuleLabel_id}"/>
-                        <h:outputText value="#{courseModuleController.selected.id}" title="#{bundle.ViewCourseModuleTitle_id}"/>
+                        <h:outputText value="#{multiAnswerBundle.ViewCourseModuleLabel_name}"/>
+                        <h:outputText value="#{courseModuleController.selected.name}" title="#{multiAnswerBundle.ViewCourseModuleTitle_name}"/>
+                        <h:outputText value="#{multiAnswerBundle.ViewCourseModuleLabel_id}"/>
+                        <h:outputText value="#{courseModuleController.selected.id}" title="#{multiAnswerBundle.ViewCourseModuleTitle_id}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="CourseModuleViewDialog.hide()"/>
+                    <p:commandButton value="#{multiAnswerBundle.Close}" onclick="CourseModuleViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

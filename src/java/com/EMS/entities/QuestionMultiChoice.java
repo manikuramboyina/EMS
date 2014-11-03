@@ -7,26 +7,33 @@ package com.EMS.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  *
  * @author mani
  */
 @Entity
+@DiscriminatorColumn(name = "QuestionType")
+@DiscriminatorValue("MULTI_CHOICE")
+@PrimaryKeyJoinColumn(name = "id")
 public class QuestionMultiChoice extends Question implements Serializable {
     private static final long serialVersionUID = 1L;
 
     
-    private Collection<String> choices;
-    public Collection<String> getChoices() {
+    private List<String> choices;
+    public List<String> getChoices() {
         return choices;
     }
 
-    public void setChoices(Collection<String> choices) {
+    public void setChoices(List<String> choices) {
         this.choices = choices;
     }
     

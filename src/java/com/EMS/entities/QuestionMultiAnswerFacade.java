@@ -8,15 +8,14 @@ package com.EMS.entities;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 
 /**
  *
  * @author mani
  */
 @Stateless
-public class QuestionFacade extends AbstractFacade<Question> {
-    @PersistenceContext(unitName = "EMSPU",type = PersistenceContextType.TRANSACTION)
+public class QuestionMultiAnswerFacade extends AbstractFacade<QuestionMultiAnswer> {
+    @PersistenceContext(unitName = "EMSPU")
     private EntityManager em;
 
     @Override
@@ -24,13 +23,8 @@ public class QuestionFacade extends AbstractFacade<Question> {
         return em;
     }
 
-    public QuestionFacade() {
-        super(Question.class);
-    }
-    
-    public void flushQuestions()
-    {
-        em.flush();
+    public QuestionMultiAnswerFacade() {
+        super(QuestionMultiAnswer.class);
     }
     
 }

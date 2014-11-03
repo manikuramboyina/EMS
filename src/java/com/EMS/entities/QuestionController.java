@@ -2,12 +2,15 @@ package com.EMS.entities;
 
 import com.EMS.entities.util.JsfUtil;
 import com.EMS.entities.util.PaginationHelper;
+import com.EMS.enums.QuestionTypes;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -17,7 +20,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
 @Named("questionController")
-@SessionScoped
+@javax.faces.view.ViewScoped
 public class QuestionController implements Serializable {
 
     private Question current;
@@ -26,8 +29,43 @@ public class QuestionController implements Serializable {
     private com.EMS.entities.QuestionFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private String questionTypeView="/templates/test.xhtml";
+    private QuestionTypes questionType;
+
+    public String getQuestionTypeView() {
+        return questionTypeView;
+    }
+
+    public void setQuestionTypeView(String questionTypeView) {
+        this.questionTypeView = questionTypeView;
+    }
+
+    public QuestionTypes getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(QuestionTypes questionType) {
+        this.questionType = questionType;
+    }
 
     public QuestionController() {
+    }
+    
+    public void onQuestionTypeChange()
+    {
+        Question tempQuestion = new QuestionMultiAnswer();
+        tempQuestion.setCoursemodule(current.getCoursemodule());
+        tempQuestion.setMarks(current.getMarks());
+        tempQuestion.setSubjects(current.getSubjects());
+        tempQuestion.setText(current.getText());
+        tempQuestion.setTypeOfQuestion(questionType);
+        current = tempQuestion;
+        this.questionTypeView = ResourceBundle.getBundle("/Bundle").getString("createQuestionTemplatePath")+questionType.toString().toLowerCase()+".xhtml";
+    }
+    
+    public QuestionTypes[] QuestionTypesArray()
+    {
+        return QuestionTypes.values();
     }
 
     public Question getSelected() {
@@ -82,7 +120,9 @@ public class QuestionController implements Serializable {
 
     public String create() {
         try {
+            current.setTypeOfQuestion(QuestionTypes.ESSAY);
             getFacade().create(current);
+            getFacade().flushQuestions();
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("QuestionCreated"));
             return prepareCreate();
         } catch (Exception e) {

@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Saurav
+ * @author mani
  */
 @Stateless
 public class CourseModuleFacade extends AbstractFacade<CourseModule> {

@@ -8,6 +8,7 @@ package com.EMS.entities;
 import com.EMS.enums.QuestionTypes;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Convert;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
@@ -18,7 +19,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.PrimaryKeyJoinColumn;
-
 /**
  *
  * @author mani
@@ -31,13 +31,13 @@ public class QuestionMultiAnswer extends Question implements Serializable {
     private static final long serialVersionUID = 1L;
     
     
-    private Collection<String> choices;
+    private List<String> choices;
 
-    public Collection<String> getChoices() {
+    public List<String> getChoices() {
         return choices;
     }
 
-    public void setChoices(Collection<String> choices) {
+    public void setChoices(List<String> choices) {
         this.choices = choices;
     }
 

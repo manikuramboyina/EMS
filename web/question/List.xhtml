@@ -20,8 +20,8 @@
                                  selectionMode="single" selection="#{questionController.selected}"
                                  paginator="true"
                                  rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows ="5"
+                                 rowsPerPageTemplate ="5,10,15,20,25,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -45,17 +45,6 @@
                             </f:facet>
                             <h:outputText value="#{item.coursemodule}"/>
                         </p:column>
-<!--                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListQuestionViewLink}"/>
-                           
-                            </f:facet>
-                            <p:dataTable var="s" value="#{item.subjects}">
-                                <p:column>
-                                <p:outputLabel value="#{s.tagName}"/>  
-                                </p:column>
-                             </p:dataTable>
-                        </p:column>-->
                         
                         <p:column>
                             <f:facet name="header">
@@ -63,6 +52,23 @@
                             </f:facet>
                             <h:outputText value="#{item.id}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                             <h:outputText value="questionType"/>
+                            </f:facet>
+                           <h:outputText value="#{item.typeOfQuestion}"/>
+                        </p:column>
+                      <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Subject tags"/>                           
+                            </f:facet>
+                            <p:dataTable var="s" value="#{item.subjects}">
+                                <p:column>
+                                <p:outputLabel value="#{s.tagName}"/>  
+                                </p:column>
+                             </p:dataTable>
+                        </p:column>
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{questionController.prepareCreate}" update=":QuestionCreateForm" oncomplete="PF('QuestionCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":QuestionViewForm" oncomplete="PF('QuestionViewDialog').show()" disabled="#{empty questionController.selected}"/>

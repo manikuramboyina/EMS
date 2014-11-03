@@ -2,38 +2,75 @@ package com.EMS.entities;
 
 import com.EMS.entities.util.JsfUtil;
 import com.EMS.entities.util.JsfUtil.PersistAction;
+import com.EMS.enums.QuestionTypes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
-@Named("courseModuleController")
-@SessionScoped
-public class CourseModuleController implements Serializable {
+@Named("questionMultiAnswerController")
+@RequestScoped
+public class QuestionMultiAnswerController implements Serializable {
 
     @EJB
-    private com.EMS.entities.CourseModuleFacade ejbFacade;
-    private List<CourseModule> items = null;
-    private CourseModule selected;
+    private com.EMS.entities.QuestionMultiAnswerFacade ejbFacade;
+    private List<QuestionMultiAnswer> items = null;
+    private QuestionMultiAnswer selected;
+    @Inject Question genricQuestion;
 
-    public CourseModuleController() {
+    public QuestionMultiAnswerController() {
+    }
+    @PostConstruct
+    public void init()
+    {
+        System.out.print("here");
+        System.out.print(genricQuestion.getText());
+    }
+    
+    public void removeChoice(int index)
+    {
+        List<String> choices = selected.getChoices();
+        choices.remove(index);
+        
+    }
+    public void addChoice()
+    {
+        
+        System.out.println("add choice");
+        System.out.print(genricQuestion.getText());
+      
+        List<String> choices = selected.getChoices();
+        if(choices==null)
+        {
+             System.out.println("choice null");
+        }
+        else {
+            System.out.println("choice empty");
+        }
+        choices.add("Hello");
+        
     }
 
-    public CourseModule getSelected() {
+    public QuestionMultiAnswer getSelected() {
         return selected;
     }
 
-    public void setSelected(CourseModule selected) {
+    public void setSelected(QuestionMultiAnswer selected) {
         this.selected = selected;
     }
 
@@ -43,36 +80,36 @@ public class CourseModuleController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private CourseModuleFacade getFacade() {
+    private QuestionMultiAnswerFacade getFacade() {
         return ejbFacade;
     }
 
-    public CourseModule prepareCreate() {
-        selected = new CourseModule();
+    public QuestionMultiAnswer prepareCreate() {
+        selected = new QuestionMultiAnswer();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/MultiAnswerBundle").getString("CourseModuleCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/MultiAnswerBundle").getString("QuestionMultiAnswerCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/MultiAnswerBundle").getString("CourseModuleUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/MultiAnswerBundle").getString("QuestionMultiAnswerUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/MultiAnswerBundle").getString("CourseModuleDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/MultiAnswerBundle").getString("QuestionMultiAnswerDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<CourseModule> getItems() {
+    public List<QuestionMultiAnswer> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -83,6 +120,11 @@ public class CourseModuleController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
+                if(persistAction == PersistAction.CREATE)
+                {
+                    selected.setTypeOfQuestion(QuestionTypes.MULTI_ANSWER);
+                    getFacade().create(selected);
+                }
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
@@ -107,29 +149,29 @@ public class CourseModuleController implements Serializable {
         }
     }
 
-    public CourseModule getCourseModule(java.lang.Long id) {
+    public QuestionMultiAnswer getQuestionMultiAnswer(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<CourseModule> getItemsAvailableSelectMany() {
+    public List<QuestionMultiAnswer> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<CourseModule> getItemsAvailableSelectOne() {
+    public List<QuestionMultiAnswer> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = CourseModule.class)
-    public static class CourseModuleControllerConverter implements Converter {
+    @FacesConverter(forClass = QuestionMultiAnswer.class)
+    public static class QuestionMultiAnswerControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CourseModuleController controller = (CourseModuleController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "courseModuleController");
-            return controller.getCourseModule(getKey(value));
+            QuestionMultiAnswerController controller = (QuestionMultiAnswerController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "questionMultiAnswerController");
+            return controller.getQuestionMultiAnswer(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -149,11 +191,11 @@ public class CourseModuleController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof CourseModule) {
-                CourseModule o = (CourseModule) object;
+            if (object instanceof QuestionMultiAnswer) {
+                QuestionMultiAnswer o = (QuestionMultiAnswer) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), CourseModule.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), QuestionMultiAnswer.class.getName()});
                 return null;
             }
         }

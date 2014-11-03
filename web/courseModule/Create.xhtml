@@ -8,17 +8,17 @@
 
     <ui:composition>
 
-        <p:dialog id="CourseModuleCreateDlg" widgetVar="CourseModuleCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCourseModuleTitle}">
+        <p:dialog id="CourseModuleCreateDlg" widgetVar="CourseModuleCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{multiAnswerBundle.CreateCourseModuleTitle}">
             <h:form id="CourseModuleCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{courseModuleController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateCourseModuleLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{courseModuleController.selected.name}" title="#{bundle.CreateCourseModuleTitle_name}" required="true" requiredMessage="#{bundle.CreateCourseModuleRequiredMessage_name}"/>
-                        <p:outputLabel value="#{bundle.CreateCourseModuleLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{courseModuleController.selected.id}" title="#{bundle.CreateCourseModuleTitle_id}" />
+                        <p:outputLabel value="#{multiAnswerBundle.CreateCourseModuleLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{courseModuleController.selected.name}" title="#{multiAnswerBundle.CreateCourseModuleTitle_name}" required="true" requiredMessage="#{multiAnswerBundle.CreateCourseModuleRequiredMessage_name}"/>
+                        <p:outputLabel value="#{multiAnswerBundle.CreateCourseModuleLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{courseModuleController.selected.id}" title="#{multiAnswerBundle.CreateCourseModuleTitle_id}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{courseModuleController.create}" value="#{bundle.Save}" update="display,:CourseModuleListForm:datalist,:growl" oncomplete="handleSubmit(args,'CourseModuleCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="CourseModuleCreateDialog.hide()"/>
+                    <p:commandButton actionListener="#{courseModuleController.create}" value="#{multiAnswerBundle.Save}" update="display,:CourseModuleListForm:datalist,:growl" oncomplete="handleSubmit(args,'CourseModuleCreateDialog');"/>
+                    <p:commandButton value="#{multiAnswerBundle.Cancel}" onclick="CourseModuleCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

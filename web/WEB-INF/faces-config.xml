@@ -16,17 +16,13 @@
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+         <converter>
+            <converter-for-class>java.lang.Enum</converter-for-class>
+            <converter-class>javax.faces.convert.EnumConverter</converter-class>
+        </converter>
         <resource-bundle>
-            <base-name>/Bundle</base-name>
-            <var>bundle</var>
-        </resource-bundle>
-        <resource-bundle>
-            <base-name>/Bundle</base-name>
-            <var>bundle</var>
-        </resource-bundle>
-        <resource-bundle>
-            <base-name>/Bundle</base-name>
-            <var>bundle</var>
+            <base-name>/MultiAnswerBundle</base-name>
+            <var>multiAnswerBundle</var>
         </resource-bundle>
     </application>
 </faces-config>
