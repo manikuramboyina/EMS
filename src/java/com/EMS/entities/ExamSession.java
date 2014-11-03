@@ -8,6 +8,8 @@ package com.EMS.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +22,7 @@ import javax.persistence.ManyToOne;
  * @author mani
  */
 @Entity
+
 public class ExamSession extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
