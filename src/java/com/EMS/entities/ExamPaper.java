@@ -29,8 +29,34 @@ public class ExamPaper extends AbstractEntity implements Serializable {
     @OneToOne
     private CourseModule module;
     
+      
     @OneToMany (mappedBy = "examPaper")
     private Collection<Section> section;
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public CourseModule getModule() {
+        return module;
+    }
+
+    public void setModule(CourseModule module) {
+        this.module = module;
+    }
+
+    public Collection<Section> getSection() {
+        return section;
+    }
+
+    public void setSection(Collection<Section> section) {
+        this.section = section;
+    }
+  
 
     @Override
     public int hashCode() {

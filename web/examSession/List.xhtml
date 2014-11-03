@@ -8,28 +8,42 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="body">
-            
-        <h:form>
-            <p:growl id="msgs" showDetail="true"/>
-            
-            <h3 style="margin-left:5px">#{bundle.EnrolledExams}</h3>
-            
-            <p:fieldset legend="Basic" style="margin-bottom:20px">
-                <h:panelGrid columns="3" cellpadding="5" width="100%">
-                    <h:outputLabel>
-                        One
-                    </h:outputLabel>
-                    <h:outputLabel>
-                        Two
-                    </h:outputLabel>
-                    <h:outputLabel>
-                        three
-                    </h:outputLabel>
-                </h:panelGrid>
-            </p:fieldset>
 
-            
-        </h:form>
+            <!--<h3 style="margin-left:5px">#{bundle.EnrolledExams}</h3>-->
+
+            <h:form >
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListExamSessionEmpty}" 
+                              rendered="#{examSessionController.items.rowCount == 0}"/>
+
+                <p:dataScroller value="#{examSessionController.items}" var="item" chunkSize="10" 
+                                rendered="#{examSessionController.items.rowCount > 0}">
+                    <f:facet name="header" >#{bundle.EnrolledExams}</f:facet>
+
+                    <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail,link">
+                        <p:graphicImage library="images" name="exam-small.png" /> 
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="#{bundle.ModuleName}:" />
+                                <h:outputText value="#{item.examPaper.module.name}" style="font-weight: bold"/>
+
+                                <h:outputText value="#{bundle.StartTime}:" />
+                                <h:outputText value="#{item.startTime}" style="font-weight: bold"/>
+
+                                <h:outputText value="#{bundle.ExamLocation}:" />
+                                <h:outputText value="#{item.location}" style="font-weight: bold"/>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                        <h:commandButton action="#{examSessionController.prepareView}" 
+                                         value="#{bundle.ProceedWithExam}" class="btn btn-primary"/>
+                    </h:panelGrid>
+
+
+                </p:dataScroller>
+
+            </h:form>
         </ui:define>
     </ui:composition>
 

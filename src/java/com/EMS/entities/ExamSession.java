@@ -37,6 +37,8 @@ public class ExamSession extends AbstractEntity implements Serializable {
     
     @ManyToOne
     private Student student;
+    
+    private Boolean isActiveSession=false;
 
     public Student getStudent() {
         return student;
