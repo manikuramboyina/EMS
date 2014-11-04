@@ -15,6 +15,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 
 @Named("studentController")
 @SessionScoped
@@ -26,6 +27,7 @@ public class StudentController implements Serializable {
     private com.EMS.entities.StudentFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    @Inject private ExamPaper ePaper;
 
     public StudentController() {
     }
@@ -75,6 +77,18 @@ public class StudentController implements Serializable {
         current = new Student();
         selectedItemIndex = -1;
         return "Create";
+    }
+    
+    public String prepareListView() {
+        current = (Student) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        System.out.println(">>>> "+current.getName() + " ##"+ selectedItemIndex);
+        return "ExamView";
+    }
+    public String prepareExamView(CourseModule mod) {        
+        System.out.println(">>>> "+mod.getName() + " ##");
+        ePaper.setModule(mod);
+        return "ExamStartPage";
     }
 
     public String create() {

@@ -15,6 +15,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 
 
 @Named("examSessionController")
@@ -27,8 +28,14 @@ public class ExamSessionController implements Serializable {
     @EJB private com.EMS.entities.ExamSessionFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    @Inject private ExamPaper ePaper; 
 
     public ExamSessionController() {
+    }
+    
+    public void startExam()
+    {
+        System.out.println(">>>insideexam session>>>>"+ePaper.getModule().toString());
     }
 
     public ExamSession getSelected() {

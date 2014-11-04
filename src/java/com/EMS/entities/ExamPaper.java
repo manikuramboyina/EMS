@@ -8,6 +8,9 @@ package com.EMS.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.Collection;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +22,9 @@ import javax.persistence.OneToOne;
  *
  * @author mani
  */
+@SessionScoped
 @Entity
+@Named
 public class ExamPaper extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

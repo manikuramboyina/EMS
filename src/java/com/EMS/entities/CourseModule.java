@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.Collection;
 import java.util.List;
+import javax.faces.view.ViewScoped;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ import javax.persistence.OneToMany;
  *
  * @author mani
  */
+@ViewScoped
 @Entity
 public class CourseModule extends AbstractEntity implements Serializable {
 

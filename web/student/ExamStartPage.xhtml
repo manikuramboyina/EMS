@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="body">
+            <h:form >
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <p:fieldset legend="#{examPaper.module.name}" style="margin-bottom:20px">
+                    <h3 style="margin-left:5px">#{bundle.ExamInstructions}</h3>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <!--<p:graphicImage library="images" name="exam-small.png" />-->
+                        <h:outputText value=""/>
+                        <h:outputText value="Step1:" style="font-weight: bold"/>
+                        <h:outputText value="#{bundle.ExamInstructionStep1}"/>
+                        <h:outputText value="Step2:" style="font-weight: bold"/>
+                        <h:outputText value="#{bundle.ExamInstructionStep2}" />
+                        <h:outputText value="Step3:" style="font-weight: bold"/>
+                        <h:outputText value="#{bundle.ExamInstructionStep3}" />
+                        <h:outputText value="Step4:" style="font-weight: bold"/>
+                        <h:outputText value="#{bundle.ExamInstructionStep4}" />
+                        <br></br>
+                        <br></br>
+                        <h:outputText value="All the Best!!!" style="font-weight: bold" />
+                    </h:panelGrid>
+                    <p:separator/>
+                    <p:commandButton value="Start Exam" actionListener="#{examSessionController.startExam()}"/>
+                </p:fieldset>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
