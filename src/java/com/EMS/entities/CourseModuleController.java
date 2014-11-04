@@ -16,15 +16,14 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-
 @Named("courseModuleController")
 @SessionScoped
 public class CourseModuleController implements Serializable {
 
-
     private CourseModule current;
     private DataModel items = null;
-    @EJB private com.EMS.entities.CourseModuleFacade ejbFacade;
+    @EJB
+    private com.EMS.entities.CourseModuleFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -42,6 +41,7 @@ public class CourseModuleController implements Serializable {
     private CourseModuleFacade getFacade() {
         return ejbFacade;
     }
+
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -53,7 +53,7 @@ public class CourseModuleController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
         }
@@ -66,7 +66,7 @@ public class CourseModuleController implements Serializable {
     }
 
     public String prepareView() {
-        current = (CourseModule)getItems().getRowData();
+        current = (CourseModule) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
@@ -89,7 +89,7 @@ public class CourseModuleController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (CourseModule)getItems().getRowData();
+        current = (CourseModule) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -106,7 +106,7 @@ public class CourseModuleController implements Serializable {
     }
 
     public String destroy() {
-        current = (CourseModule)getItems().getRowData();
+        current = (CourseModule) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -140,14 +140,14 @@ public class CourseModuleController implements Serializable {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count-1;
+            selectedItemIndex = count - 1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
 
@@ -190,7 +190,7 @@ public class CourseModuleController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass=CourseModule.class)
+    @FacesConverter(forClass = CourseModule.class)
     public static class CourseModuleControllerConverter implements Converter {
 
         @Override
@@ -198,7 +198,7 @@ public class CourseModuleController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CourseModuleController controller = (CourseModuleController)facesContext.getApplication().getELResolver().
+            CourseModuleController controller = (CourseModuleController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "courseModuleController");
             return controller.getCourseModule(getKey(value));
         }
@@ -224,7 +224,7 @@ public class CourseModuleController implements Serializable {
                 CourseModule o = (CourseModule) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+CourseModule.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + CourseModule.class.getName());
             }
         }
 

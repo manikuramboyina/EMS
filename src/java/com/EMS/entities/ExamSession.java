@@ -29,12 +29,7 @@ public class ExamSession extends AbstractEntity implements Serializable {
 
     @ManyToOne
     private ExamPaper examPaper;
-    private Date dateOfExam;
-    private Time startTime;
-    
-    private Integer duration;
-    private String location;
-    
+        
     @ManyToOne
     private Student student;
     
@@ -48,31 +43,7 @@ public class ExamSession extends AbstractEntity implements Serializable {
         this.student = student;
     }
 
-    public Time getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public ExamPaper getExamPaper() {
+        public ExamPaper getExamPaper() {
         return examPaper;
     }
 
@@ -80,14 +51,7 @@ public class ExamSession extends AbstractEntity implements Serializable {
         this.examPaper = examPaper;
     }
 
-    public Date getDateOfExam() {
-        return dateOfExam;
-    }
-
-    public void setDateOfExam(Date dateOfExam) {
-        this.dateOfExam = dateOfExam;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

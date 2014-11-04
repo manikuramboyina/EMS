@@ -22,6 +22,18 @@
                     <h:dataTable value="#{examPaperController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
                         <h:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExamPaperTitle_createdOn}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.createdOn}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExamPaperTitle_module}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.module}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListExamPaperTitle_id}"/>
                             </f:facet>
                             <h:outputText value="#{item.id}"/>

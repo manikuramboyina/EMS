@@ -6,6 +6,8 @@
 package com.EMS.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
@@ -28,9 +30,55 @@ public class CourseModule extends AbstractEntity implements Serializable {
 
     @Basic(optional = false)
     private String name;
+    
+    @Basic(optional = false)
+    private Date dateOfExam;
+    
+    @Basic(optional = false)
+    private Time startTime;   
+    
+    @Basic(optional = false) 
+    private Integer duration;
+
+        
+    @Basic(optional = false)
+    private String location;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "coursemodule")
     private Collection<Question> questions;
+    
+    public Date getDateOfExam() {
+        return dateOfExam;
+    }
+
+    public void setDateOfExam(Date dateOfExam) {
+        this.dateOfExam = dateOfExam;
+    }
+
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
 
     public String getName() {
         return name;

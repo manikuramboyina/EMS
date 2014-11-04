@@ -15,6 +15,12 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateExamPaperLabel_createdOn}" for="createdOn" />
+                    <h:inputText id="createdOn" value="#{examPaperController.selected.createdOn}" title="#{bundle.CreateExamPaperTitle_createdOn}" />
+                    <h:outputLabel value="#{bundle.CreateExamPaperLabel_module}" for="module" />
+                    <h:selectOneMenu id="module" value="#{examPaperController.selected.module}" title="#{bundle.CreateExamPaperTitle_module}" >
+                        <f:selectItems value="#{courseModuleController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.CreateExamPaperLabel_id}" for="id" />
                     <h:inputText id="id" value="#{examPaperController.selected.id}" title="#{bundle.CreateExamPaperTitle_id}" />
                 </h:panelGrid>

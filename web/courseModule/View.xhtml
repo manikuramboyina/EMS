@@ -15,6 +15,14 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewCourseModuleLabel_dateOfExam}"/>
+                    <h:outputText value="#{courseModuleController.selected.dateOfExam}" title="#{bundle.ViewCourseModuleTitle_dateOfExam}"/>
+                    <h:outputText value="#{bundle.ViewCourseModuleLabel_startTime}"/>
+                    <h:outputText value="#{courseModuleController.selected.startTime}" title="#{bundle.ViewCourseModuleTitle_startTime}"/>
+                    <h:outputText value="#{bundle.ViewCourseModuleLabel_duration}"/>
+                    <h:outputText value="#{courseModuleController.selected.duration}" title="#{bundle.ViewCourseModuleTitle_duration}"/>
+                    <h:outputText value="#{bundle.ViewCourseModuleLabel_location}"/>
+                    <h:outputText value="#{courseModuleController.selected.location}" title="#{bundle.ViewCourseModuleTitle_location}"/>
                     <h:outputText value="#{bundle.ViewCourseModuleLabel_name}"/>
                     <h:outputText value="#{courseModuleController.selected.name}" title="#{bundle.ViewCourseModuleTitle_name}"/>
                     <h:outputText value="#{bundle.ViewCourseModuleLabel_id}"/>

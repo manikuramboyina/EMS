@@ -15,6 +15,14 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateCourseModuleLabel_dateOfExam}" for="dateOfExam" />
+                    <h:inputText id="dateOfExam" value="#{courseModuleController.selected.dateOfExam}" title="#{bundle.CreateCourseModuleTitle_dateOfExam}" required="true" requiredMessage="#{bundle.CreateCourseModuleRequiredMessage_dateOfExam}"/>
+                    <h:outputLabel value="#{bundle.CreateCourseModuleLabel_startTime}" for="startTime" />
+                    <h:inputText id="startTime" value="#{courseModuleController.selected.startTime}" title="#{bundle.CreateCourseModuleTitle_startTime}" required="true" requiredMessage="#{bundle.CreateCourseModuleRequiredMessage_startTime}"/>
+                    <h:outputLabel value="#{bundle.CreateCourseModuleLabel_duration}" for="duration" />
+                    <h:inputText id="duration" value="#{courseModuleController.selected.duration}" title="#{bundle.CreateCourseModuleTitle_duration}" required="true" requiredMessage="#{bundle.CreateCourseModuleRequiredMessage_duration}"/>
+                    <h:outputLabel value="#{bundle.CreateCourseModuleLabel_location}" for="location" />
+                    <h:inputText id="location" value="#{courseModuleController.selected.location}" title="#{bundle.CreateCourseModuleTitle_location}" required="true" requiredMessage="#{bundle.CreateCourseModuleRequiredMessage_location}"/>
                     <h:outputLabel value="#{bundle.CreateCourseModuleLabel_name}" for="name" />
                     <h:inputText id="name" value="#{courseModuleController.selected.name}" title="#{bundle.CreateCourseModuleTitle_name}" required="true" requiredMessage="#{bundle.CreateCourseModuleRequiredMessage_name}"/>
                     <h:outputLabel value="#{bundle.CreateCourseModuleLabel_id}" for="id" />

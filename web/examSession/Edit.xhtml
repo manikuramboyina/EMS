@@ -16,19 +16,13 @@
             <h:form>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.EditExamSessionLabel_student}" for="student" />
-                    <h:inputText id="student" value="#{examSessionController.selected.student}" title="#{bundle.EditExamSessionTitle_student}" required="true" requiredMessage="#{bundle.EditExamSessionRequiredMessage_student}"/>
-                    <h:outputLabel value="#{bundle.EditExamSessionLabel_startTime}" for="startTime" />
-                    <h:inputText id="startTime" value="#{examSessionController.selected.startTime}" title="#{bundle.EditExamSessionTitle_startTime}" />
-                    <h:outputLabel value="#{bundle.EditExamSessionLabel_duration}" for="duration" />
-                    <h:inputText id="duration" value="#{examSessionController.selected.duration}" title="#{bundle.EditExamSessionTitle_duration}" />
-                    <h:outputLabel value="#{bundle.EditExamSessionLabel_location}" for="location" />
-                    <h:inputText id="location" value="#{examSessionController.selected.location}" title="#{bundle.EditExamSessionTitle_location}" />
+                    <h:selectOneMenu id="student" value="#{examSessionController.selected.student}" title="#{bundle.EditExamSessionTitle_student}" >
+                        <f:selectItems value="#{studentController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.EditExamSessionLabel_examPaper}" for="examPaper" />
                     <h:selectOneMenu id="examPaper" value="#{examSessionController.selected.examPaper}" title="#{bundle.EditExamSessionTitle_examPaper}" >
                         <f:selectItems value="#{examPaperController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.EditExamSessionLabel_dateOfExam}" for="dateOfExam" />
-                    <h:inputText id="dateOfExam" value="#{examSessionController.selected.dateOfExam}" title="#{bundle.EditExamSessionTitle_dateOfExam}" />
                     <h:outputLabel value="#{bundle.EditExamSessionLabel_id}" for="id" />
                     <h:inputText id="id" value="#{examSessionController.selected.id}" title="#{bundle.EditExamSessionTitle_id}" />
                 </h:panelGrid>

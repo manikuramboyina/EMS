@@ -16,14 +16,15 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
+
 @Named("examSessionController")
 @SessionScoped
 public class ExamSessionController implements Serializable {
 
+
     private ExamSession current;
     private DataModel items = null;
-    @EJB
-    private com.EMS.entities.ExamSessionFacade ejbFacade;
+    @EJB private com.EMS.entities.ExamSessionFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -41,7 +42,6 @@ public class ExamSessionController implements Serializable {
     private ExamSessionFacade getFacade() {
         return ejbFacade;
     }
-
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -53,7 +53,7 @@ public class ExamSessionController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
                 }
             };
         }
@@ -66,7 +66,7 @@ public class ExamSessionController implements Serializable {
     }
 
     public String prepareView() {
-        current = (ExamSession) getItems().getRowData();
+        current = (ExamSession)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
@@ -89,7 +89,7 @@ public class ExamSessionController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (ExamSession) getItems().getRowData();
+        current = (ExamSession)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -106,7 +106,7 @@ public class ExamSessionController implements Serializable {
     }
 
     public String destroy() {
-        current = (ExamSession) getItems().getRowData();
+        current = (ExamSession)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -140,14 +140,14 @@ public class ExamSessionController implements Serializable {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
+            selectedItemIndex = count-1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
         }
     }
 
@@ -190,7 +190,7 @@ public class ExamSessionController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = ExamSession.class)
+    @FacesConverter(forClass=ExamSession.class)
     public static class ExamSessionControllerConverter implements Converter {
 
         @Override
@@ -198,7 +198,7 @@ public class ExamSessionController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            ExamSessionController controller = (ExamSessionController) facesContext.getApplication().getELResolver().
+            ExamSessionController controller = (ExamSessionController)facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "examSessionController");
             return controller.getExamSession(getKey(value));
         }
@@ -224,7 +224,7 @@ public class ExamSessionController implements Serializable {
                 ExamSession o = (ExamSession) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + ExamSession.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+ExamSession.class.getName());
             }
         }
 
