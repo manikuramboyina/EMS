@@ -17,6 +17,7 @@ import javax.ejb.EJBException;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -24,46 +25,45 @@ import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
 @Named("questionMultiAnswerController")
-@RequestScoped
+@javax.faces.view.ViewScoped
 public class QuestionMultiAnswerController implements Serializable {
 
     @EJB
     private com.EMS.entities.QuestionMultiAnswerFacade ejbFacade;
     private List<QuestionMultiAnswer> items = null;
     private QuestionMultiAnswer selected;
-    @Inject Question genricQuestion;
+
 
     public QuestionMultiAnswerController() {
+      
     }
     @PostConstruct
     public void init()
     {
-        System.out.print("here");
-        System.out.print(genricQuestion.getText());
+     selected = new QuestionMultiAnswer();       
     }
     
     public void removeChoice(int index)
     {
         List<String> choices = selected.getChoices();
+        if(choices != null)
+        {
         choices.remove(index);
-        
+        selected.setChoices(choices);
+        }
+              
     }
     public void addChoice()
     {
-        
-        System.out.println("add choice");
-        System.out.print(genricQuestion.getText());
+         List<String> choices = selected.getChoices();
       
-        List<String> choices = selected.getChoices();
         if(choices==null)
         {
-             System.out.println("choice null");
+            choices = new ArrayList<String>();
         }
-        else {
-            System.out.println("choice empty");
-        }
-        choices.add("Hello");
+        choices.add("Default"+choices.size());
         
+        selected.setChoices(choices);      
     }
 
     public QuestionMultiAnswer getSelected() {

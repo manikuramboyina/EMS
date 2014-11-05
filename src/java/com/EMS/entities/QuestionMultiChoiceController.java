@@ -2,12 +2,15 @@ package com.EMS.entities;
 
 import com.EMS.entities.util.JsfUtil;
 import com.EMS.entities.util.JsfUtil.PersistAction;
+import com.EMS.enums.QuestionTypes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -31,6 +34,35 @@ public class QuestionMultiChoiceController implements Serializable {
 
     public QuestionMultiChoice getSelected() {
         return selected;
+    }
+    
+    @PostConstruct
+    public void init()
+    {
+     selected = new QuestionMultiChoice();       
+    }
+    
+     public void removeChoice(int index)
+    {
+        List<String> choices = selected.getChoices();
+        if(choices != null)
+        {
+        choices.remove(index);
+        selected.setChoices(choices);
+        }
+              
+    }
+    public void addChoice()
+    {
+         List<String> choices = selected.getChoices();
+      
+        if(choices==null)
+        {
+            choices = new ArrayList<String>();
+        }
+        choices.add("Choice "+choices.size());
+        
+        selected.setChoices(choices);      
     }
 
     public void setSelected(QuestionMultiChoice selected) {
@@ -83,7 +115,11 @@ public class QuestionMultiChoiceController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                 if(persistAction == PersistAction.CREATE)
+                {
+                    selected.setTypeOfQuestion(QuestionTypes.MULTI_CHOICE);
+                    getFacade().create(selected);
+                }   if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);

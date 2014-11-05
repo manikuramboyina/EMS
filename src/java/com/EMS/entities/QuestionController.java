@@ -7,10 +7,7 @@ import com.EMS.enums.QuestionTypes;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,6 +15,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 
 @Named("questionController")
 @javax.faces.view.ViewScoped
@@ -53,13 +51,6 @@ public class QuestionController implements Serializable {
     
     public void onQuestionTypeChange()
     {
-        Question tempQuestion = new QuestionMultiAnswer();
-        tempQuestion.setCoursemodule(current.getCoursemodule());
-        tempQuestion.setMarks(current.getMarks());
-        tempQuestion.setSubjects(current.getSubjects());
-        tempQuestion.setText(current.getText());
-        tempQuestion.setTypeOfQuestion(questionType);
-        current = tempQuestion;
         this.questionTypeView = ResourceBundle.getBundle("/Bundle").getString("createQuestionTemplatePath")+questionType.toString().toLowerCase()+".xhtml";
     }
     
@@ -124,6 +115,7 @@ public class QuestionController implements Serializable {
             getFacade().create(current);
             getFacade().flushQuestions();
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("QuestionCreated"));
+            recreateModel();
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -149,7 +141,6 @@ public class QuestionController implements Serializable {
     }
 
     public String destroy() {
-        current = (Question) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();

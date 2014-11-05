@@ -4,59 +4,24 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:my="http://java.sun.com/jsf/composite/ezcomp">
 
     <ui:composition>
 
         <p:dialog id="QuestionCreateDlg" widgetVar="QuestionCreateDialog" position="top" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateQuestionTitle}">
             <h:form id="QuestionCreateForm">
-                <h:panelGroup id="display">
-                    <h:panelGrid columns="2">
-                        <p:outputLabel for="qType" value="#{bundle.CreateQuestionTitle_questionType}" />
-                        <p:selectOneMenu id="qType" value="#{questionController.questionType}" required="true" requiredMessage="*" style="width:150px">                                             
-                            <p:ajax listener="#{questionController.onQuestionTypeChange()}" process="display" update="display"/>
-                            <f:selectItems value="#{questionController.QuestionTypesArray()}"/>
-                        </p:selectOneMenu>
-                    </h:panelGrid>
-                    <p:panelGrid columns="2" rendered="#{questionController.selected != null}"> 
-                        <p:outputLabel value="#{bundle.CreateQuestionLabel_marks}" for="marks" />
-                        <p:inputText id="marks" value="#{questionController.selected.marks}" title="#{bundle.CreateQuestionTitle_marks}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_marks}"/>
-                        <p:outputLabel value="#{bundle.CreateQuestionLabel_text}" for="text" />
-                        <p:inputTextarea id="text" value="#{questionController.selected.text}" title="#{bundle.CreateQuestionTitle_text}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_text}"/>
-                        <p:outputLabel value="#{bundle.CreateQuestionLabel_coursemodule}" for="coursemodule" />
-                        <p:selectOneMenu id="coursemodule" value="#{questionController.selected.coursemodule}" >
-                            <f:selectItems value="#{courseModuleController.itemsAvailableSelectOne}"
-                                           var="coursemoduleItem"
-                                           itemValue="#{coursemoduleItem}"/>
-                        </p:selectOneMenu>
-
-                        <p:outputLabel value="#{bundle.CreateSubjectLabel_tagName}" for="subjectTags" />
-                        <p:selectManyMenu id="subjectTags" required="true" value="#{questionController.selected.subjects}">
-                            <f:selectItems value="#{subjectController.itemsAvailableSelectMany}" 
-                                           var="subjectItem" itemValue="#{subjectItem}" 
-                                           itemLabel="#{subjectItem.tagName}"></f:selectItems>
-                            <f:converter converterId="com.EMS.entities.util.SubjectConverter" />
-                        </p:selectManyMenu >                     
-                        <p:outputLabel value="#{bundle.CreateQuestionLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{questionController.selected.id}" title="#{bundle.CreateQuestionTitle_id}" />                     
-                        <f:facet name="footer">
-                            <p:row>
-                                <p:column rowspan="2">
-                                    <p:commandButton actionListener="#{questionController.create}" value="#{bundle.Save}" update="display,:QuestionListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuestionCreateDialog');"/>
-                                    <p:commandButton value="#{bundle.Cancel}" onclick="QuestionCreateDialog.hide()"/>
-                                </p:column>
-                            </p:row>
-                        </f:facet>
-
-                    </p:panelGrid>
-                    
-
-
-                    <ui:include id="questionTypeView" src ="#{questionController.questionTypeView}"/>
-
-                </h:panelGroup>
+                <p:panelGrid id="display" columns="1">
+                    <f:facet name="header">
+                    <p:outputLabel for="qType" value="#{bundle.CreateQuestionTitle_questionType}"/>
+                    <p:selectOneMenu id="qType" value="#{questionController.questionType}" required="true" requiredMessage="*" style="width:150px">                                             
+                        <p:ajax listener="#{questionController.onQuestionTypeChange()}" update="display"/>
+                        <f:selectItems value="#{questionController.QuestionTypesArray()}"/>
+                    </p:selectOneMenu>
+                     </f:facet>
+                            <ui:include id="questionTypeView" src ="#{questionController.questionTypeView}"/>
+                </p:panelGrid>   
             </h:form>
-               
         </p:dialog>
 
     </ui:composition>

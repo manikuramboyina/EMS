@@ -4,6 +4,7 @@ import com.EMS.entities.util.JsfUtil;
 import com.EMS.entities.util.PaginationHelper;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -181,9 +182,9 @@ public class CourseModuleController implements Serializable {
     public SelectItem[] getItemsAvailableSelectMany() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
     }
-
-    public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+    
+     public List<CourseModule> getItemsAvailableSelectOne() {
+        return ejbFacade.findAll();
     }
 
     public CourseModule getCourseModule(java.lang.Long id) {

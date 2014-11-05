@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 public class QuestionMultiChoice extends Question implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    
+    @ElementCollection
     private List<String> choices;
     public List<String> getChoices() {
         return choices;
