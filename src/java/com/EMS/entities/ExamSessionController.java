@@ -2,13 +2,17 @@ package com.EMS.entities;
 
 import com.EMS.entities.util.JsfUtil;
 import com.EMS.entities.util.PaginationHelper;
+import java.io.IOException;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
@@ -28,14 +32,24 @@ public class ExamSessionController implements Serializable {
     @EJB private com.EMS.entities.ExamSessionFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    @Inject private ExamPaper ePaper; 
+    @Inject private ExamPaper ePaper;
+    
+    private ExternalContext externalContext;
 
     public ExamSessionController() {
+        externalContext = FacesContext.getCurrentInstance().getExternalContext();
     }
     
-    public void startExam()
+    public String startExam()
     {
         System.out.println(">>>insideexam session>>>>"+ePaper.getModule().toString());
+         
+        try {
+            externalContext.redirect("/EMS/faces/examSession/LiveExamPage.xhtml?faces-redirect=true");
+        } catch (IOException ex) {
+            Logger.getLogger(ExamSessionController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "null";
     }
 
     public ExamSession getSelected() {

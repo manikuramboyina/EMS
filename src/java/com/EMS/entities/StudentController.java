@@ -70,25 +70,25 @@ public class StudentController implements Serializable {
     public String prepareView() {
         current = (Student) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
+        return "View?faces-redirect=true";
     }
 
     public String prepareCreate() {
         current = new Student();
         selectedItemIndex = -1;
-        return "Create";
+        return "Create?faces-redirect=true";
     }
     
     public String prepareListView() {
         current = (Student) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         System.out.println(">>>> "+current.getName() + " ##"+ selectedItemIndex);
-        return "ExamView";
+        return "ExamView?faces-redirect=true";
     }
     public String prepareExamView(CourseModule mod) {        
         System.out.println(">>>> "+mod.getName() + " ##");
         ePaper.setModule(mod);
-        return "ExamStartPage";
+        return "ExamStartPage?faces-redirect=true";
     }
 
     public String create() {

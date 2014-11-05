@@ -31,7 +31,7 @@
                         <h:outputText value="All the Best!!!" style="font-weight: bold" />
                     </h:panelGrid>
                     <p:separator/>
-                    <p:commandButton value="Start Exam" actionListener="#{examSessionController.startExam()}"/>
+                    <h:commandButton value="#{bundle.ExamStart}" action="#{examSessionController.startExam()}"/>
                 </p:fieldset>
 
             </h:form>
