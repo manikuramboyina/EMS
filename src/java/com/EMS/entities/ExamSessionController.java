@@ -45,7 +45,7 @@ public class ExamSessionController implements Serializable {
         System.out.println(">>>insideexam session>>>>"+ePaper.getModule().toString());
          
         try {
-            externalContext.redirect("/EMS/faces/examSession/LiveExamPage.xhtml?faces-redirect=true");
+            externalContext.redirect("/EMS/faces/examSession/LiveExamPage.xhtml");
         } catch (IOException ex) {
             Logger.getLogger(ExamSessionController.class.getName()).log(Level.SEVERE, null, ex);
         }

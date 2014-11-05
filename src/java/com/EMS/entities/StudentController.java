@@ -27,7 +27,8 @@ public class StudentController implements Serializable {
     private com.EMS.entities.StudentFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    @Inject private ExamPaper ePaper;
+    @Inject
+    private ExamPaper ePaper;
 
     public StudentController() {
     }
@@ -78,15 +79,15 @@ public class StudentController implements Serializable {
         selectedItemIndex = -1;
         return "Create?faces-redirect=true";
     }
-    
+
     public String prepareListView() {
         current = (Student) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        System.out.println(">>>> "+current.getName() + " ##"+ selectedItemIndex);
+        System.out.println(">>>> " + current.getName() + " ##" + selectedItemIndex);
         return "ExamView?faces-redirect=true";
     }
-    public String prepareExamView(CourseModule mod) {        
-        System.out.println(">>>> "+mod.getName() + " ##");
+
+    public String prepareExamView(CourseModule mod) {
         ePaper.setModule(mod);
         return "ExamStartPage?faces-redirect=true";
     }
