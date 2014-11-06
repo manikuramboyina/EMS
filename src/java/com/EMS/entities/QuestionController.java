@@ -21,7 +21,7 @@ import javax.inject.Inject;
 @javax.faces.view.ViewScoped
 public class QuestionController implements Serializable {
 
-    @Inject private Question current;
+    private Question current;
     private DataModel items = null;
     @EJB
     private com.EMS.entities.QuestionFacade ejbFacade;
