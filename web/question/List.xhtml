@@ -72,7 +72,7 @@
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{questionController.prepareCreate}" update=":QuestionCreateForm" oncomplete="PF('QuestionCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":QuestionViewForm" oncomplete="PF('QuestionViewDialog').show()" disabled="#{empty questionController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":QuestionEditForm" oncomplete="PF('QuestionEditDialog').show()" disabled="#{empty questionController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{questionController.prepareEdit}" update=":QuestionEditForm" oncomplete="PF('QuestionEditDialog').show()" disabled="#{empty questionController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{questionController.destroy}" update=":growl,datalist" disabled="#{empty questionController.selected}"/>
                         </f:facet>
                     </p:dataTable>

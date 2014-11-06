@@ -7,14 +7,14 @@
                  xmlns:ui="http://java.sun.com/jsf/facelets"
                  xmlns:my="http://java.sun.com/jsf/composite/ezcomp">
     <p:panelGrid columns="1">
-        <my:questionTemplate marksValue="#{questionController.selected.marks}"
+        <my:createquestionTemplate marksValue="#{questionController.selected.marks}"
                              questionText="#{questionController.selected.text}"
                              subjectList="#{subjectController.itemsAvailableSelectMany}"
                              selectedSubjects="#{questionController.selected.subjects}"
                              moduleList="#{courseModuleController.itemsAvailableSelectOne}"
                              selectedModule="#{questionController.selected.coursemodule}"
                              rendered="#{questionController.selected != null}">
-        </my:questionTemplate>
+        </my:createquestionTemplate>
         <f:facet name="footer">
                 <p:commandButton actionListener="#{questionController.create}" value="#{bundle.Save}" update="display,:QuestionListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuestionCreateDialog');" ajax="true"/>
                 <p:commandButton value="#{bundle.Cancel}" onclick="QuestionCreateDialog.hide()" immediate="true"/>

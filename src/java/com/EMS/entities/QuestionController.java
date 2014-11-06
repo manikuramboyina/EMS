@@ -21,21 +21,39 @@ import javax.inject.Inject;
 @javax.faces.view.ViewScoped
 public class QuestionController implements Serializable {
 
-    private Question current;
+    @Inject private Question current;
     private DataModel items = null;
     @EJB
     private com.EMS.entities.QuestionFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    private String questionTypeView="/templates/test.xhtml";
-    private QuestionTypes questionType;
+    private String createquestionTypeView="/templates/test.xhtml";
+    private String editquestionTypeView="/templates/test.xhtml";
+    private String viewquestionTypeView="/templates/test.xhtml";
 
-    public String getQuestionTypeView() {
-        return questionTypeView;
+    public String getEditquestionTypeView() {
+        return editquestionTypeView;
     }
 
-    public void setQuestionTypeView(String questionTypeView) {
-        this.questionTypeView = questionTypeView;
+    public void setEditquestionTypeView(String editquestionTypeView) {
+        this.editquestionTypeView = editquestionTypeView;
+    }
+
+    public String getViewquestionTypeView() {
+        return viewquestionTypeView;
+    }
+
+    public void setViewquestionTypeView(String viewquestionTypeView) {
+        this.viewquestionTypeView = viewquestionTypeView;
+    }
+    private QuestionTypes questionType;
+
+    public String getCreatequestionTypeView() {
+        return createquestionTypeView;
+    }
+
+    public void setCreatequestionTypeView(String createquestionTypeView) {
+        this.createquestionTypeView = createquestionTypeView;
     }
 
     public QuestionTypes getQuestionType() {
@@ -51,7 +69,7 @@ public class QuestionController implements Serializable {
     
     public void onQuestionTypeChange()
     {
-        this.questionTypeView = ResourceBundle.getBundle("/Bundle").getString("createQuestionTemplatePath")+questionType.toString().toLowerCase()+".xhtml";
+        this.createquestionTypeView = ResourceBundle.getBundle("/Bundle").getString("createQuestionTemplatePath")+questionType.toString().toLowerCase()+".xhtml";
     }
     
     public QuestionTypes[] QuestionTypesArray()
@@ -126,7 +144,7 @@ public class QuestionController implements Serializable {
     public String prepareEdit() {
         current = (Question) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
+        return ResourceBundle.getBundle("/Bundle").getString("editQuestionTemplatePath")+current.getTypeOfQuestion().toString().toLowerCase()+".xhtml";
     }
 
     public String update() {

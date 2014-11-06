@@ -10,25 +10,9 @@
         <a href="Edit.xhtml"></a>
         <p:dialog id="QuestionEditDlg" widgetVar="QuestionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditQuestionTitle}">
             <h:form id="QuestionEditForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{questionController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditQuestionLabel_marks}" for="marks" />
-                        <p:inputText id="marks" value="#{questionController.selected.marks}" title="#{bundle.EditQuestionTitle_marks}" required="true" requiredMessage="#{bundle.EditQuestionRequiredMessage_marks}"/>
-                        <p:outputLabel value="#{bundle.EditQuestionLabel_text}" for="text" />
-                        <p:inputTextarea id="text" value="#{questionController.selected.text}" title="#{bundle.EditQuestionTitle_text}" required="true" requiredMessage="#{bundle.EditQuestionRequiredMessage_text}"/>
-                        <p:outputLabel value="#{bundle.EditQuestionLabel_coursemodule}" for="coursemodule" />
-                        <p:selectOneMenu id="coursemodule" value="#{questionController.selected.coursemodule}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{courseModuleController.itemsAvailableSelectOne}"
-                                           var="coursemoduleItem"
-                                           itemValue="#{coursemoduleItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditQuestionLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{questionController.selected.id}" title="#{bundle.EditQuestionTitle_id}" />
+                    <p:panelGrid id="display" columns="1" rendered="#{questionController.selected != null}">
+                         <ui:include id="editquestionTypeView" src ="#{questionController.editquestionTypeView}"/>                           
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{questionController.update}" value="#{bundle.Save}" update="display,:QuestionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'QuestionEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="QuestionEditDialog.hide()"/>
-                </h:panelGroup>
             </h:form>
         </p:dialog>
 

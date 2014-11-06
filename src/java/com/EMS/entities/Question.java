@@ -9,6 +9,7 @@ import com.EMS.enums.QuestionTypes;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -37,7 +38,7 @@ import javax.persistence.OneToMany;
  *
  * @author mani
  */
-@ViewScoped
+@SessionScoped
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "QuestionType")
