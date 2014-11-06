@@ -19,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 /**
  *
@@ -32,23 +33,32 @@ public class CourseModule extends AbstractEntity implements Serializable {
 
     @Basic(optional = false)
     private String name;
-    
+
     @Basic(optional = false)
     private Date dateOfExam;
-    
+
     @Basic(optional = false)
-    private Time startTime;   
-    
-    @Basic(optional = false) 
+    private Time startTime;
+
+    @Basic(optional = false)
     private Integer duration;
 
-        
     @Basic(optional = false)
     private String location;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "coursemodule")
     private Collection<Question> questions;
     
+    @Transient private long timeToStart=1;
+
+    public long getTimeToStart() {
+        return timeToStart;
+    }
+
+    public void setTimeToStart(long timeToStart) {
+        this.timeToStart = timeToStart;
+    }
+
     public Date getDateOfExam() {
         return dateOfExam;
     }
@@ -80,7 +90,6 @@ public class CourseModule extends AbstractEntity implements Serializable {
     public void setLocation(String location) {
         this.location = location;
     }
-
 
     public String getName() {
         return name;
@@ -123,4 +132,15 @@ public class CourseModule extends AbstractEntity implements Serializable {
         return "com.EMS.entities.Module[ id=" + id + " ]";
     }
 
+    public String timeToString() {
+        long timeInMilliSeconds = (this.startTime.getTime() + this.dateOfExam.getTime() - System.currentTimeMillis());
+        long seconds = timeInMilliSeconds / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+        timeToStart = seconds;
+        String time = days + " days:" + hours % 24 + " hours:" + minutes % 60 + " mins:" + seconds % 60 + " secs";
+        return time;
+        
+    }
 }

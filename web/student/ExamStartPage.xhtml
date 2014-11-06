@@ -12,12 +12,25 @@
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
+                <p:outputPanel style="alignment-adjust: middle"><h3 style="margin-left:35%">#{bundle.ExamInstructions}</h3></p:outputPanel>
                 <p:fieldset legend="#{examPaper.module.name}" style="margin-bottom:20px">
-                    <h3 style="margin-left:5px">#{bundle.ExamInstructions}</h3>
-                    <h3 style="margin-left:5px">#{bundle.ExamDuration}: #{examPaper.module.duration} hours</h3>
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <!--<p:graphicImage library="images" name="exam-small.png" />-->
-                        <h:outputText value=""/>
+                    <p:panelGrid columns="3" style="border-width: 0px">  
+                        <p:panelGrid columns="1">                    
+                            <h3 style="margin-left:5px">#{bundle.ExamDate}: #{examPaper.module.dateOfExam.toLocalDate()} </h3>
+                           
+                        </p:panelGrid>
+                        <p:panelGrid columns="1">                    
+                            <h3 style="margin-left:5px">#{bundle.StartTime}: #{examPaper.module.startTime} hours</h3>
+                           
+                        </p:panelGrid>
+                        <p:panelGrid columns="1">                    
+                           
+                            <h3 style="margin-left:5px">#{bundle.ExamDuration}: #{examPaper.module.duration} hours</h3>
+                        </p:panelGrid>
+                    </p:panelGrid>
+                    <p:separator/>
+                    <p:panelGrid columns="2" style="border-width: 0px">
+
                         <h:outputText value="Step1:" style="font-weight: bold"/>
                         <h:outputText value="#{bundle.ExamInstructionStep1}"/>
                         <h:outputText value="Step2:" style="font-weight: bold"/>
@@ -28,10 +41,11 @@
                         <h:outputText value="#{bundle.ExamInstructionStep4}" />
                         <br></br>
                         <br></br>
-                        <h:outputText value="All the Best!!!" style="font-weight: bold" />
-                    </h:panelGrid>
+                        <h:outputText value="Good Luck..!!!" style="font-weight: bold" />
+                    </p:panelGrid>
                     <p:separator/>
-                    <h:commandButton value="#{bundle.ExamStart}" action="#{examSessionController.startExam()}"/>
+
+                    <p:commandButton id="startButton" value="#{bundle.ExamStart}" action= "#{examSessionController.startExam()}" ajax="false"/>
                 </p:fieldset>
 
             </h:form>

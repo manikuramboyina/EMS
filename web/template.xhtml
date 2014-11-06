@@ -22,7 +22,6 @@
 
         <p:layout fullPage="true">
             <p:layoutUnit  position="north" size="30" header="#{bundle.AppName}">
-                
             </p:layoutUnit>
             <p:layoutUnit position="west" size="170">
                 <p:graphicImage library="images" name="EMS_transparent_small.jpg" />
@@ -34,7 +33,7 @@
                             <p:menuitem value="Question" outcome="/question/List.xhtml" />
                             <p:menuitem value="Subject" outcome="/subject/List.xhtml" />
                         </p:submenu>
-                        <p:menuitem value="#{bundle.Exams}" outcome="/student/ExamView.xhtml"/>
+                        <p:menuitem value="#{bundle.Exams}" outcome="/student/List.xhtml"/>
                     </p:slideMenu>
                 </h:form>
             </p:layoutUnit>
@@ -43,6 +42,10 @@
             </p:layoutUnit>
 
             <p:layoutUnit position="center">
+                <p:panelGrid columns="2" style="float: right">
+                    <h:outputText value="Current Time: " style="font-weight: bold"/>
+                    <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" />
+                </p:panelGrid>
                 <ui:insert name="body"/>
             </p:layoutUnit>
 

@@ -9,12 +9,11 @@
     <ui:composition template="/ExamPageTemplate.xhtml">
         <ui:define name="body">
             <h:form >
-                <h:panelGroup id="messagePanel" layout="block">
+                <p:panel id="messagePanel">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
+                </p:panel>
                 <p:fieldset legend="#{examPaper.module.name}" style="margin-bottom:20px">
-                    <h3 style="margin-left:5px">#{bundle.ExamInstructions}</h3>
-                   
+                    <p:panelGrid layout="grid" columns=""></p:panelGrid>                   
                 </p:fieldset>
 
             </h:form>
