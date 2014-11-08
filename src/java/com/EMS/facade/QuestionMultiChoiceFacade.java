@@ -3,20 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.EMS.entities;
+package com.EMS.facade;
 
+import com.EMS.entities.QuestionMultiChoice;
+import com.EMS.facade.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 
 /**
  *
  * @author mani
  */
 @Stateless
-public class QuestionFacade extends AbstractFacade<Question> {
-    @PersistenceContext(unitName = "EMSPU",type = PersistenceContextType.TRANSACTION)
+public class QuestionMultiChoiceFacade extends AbstractFacade<QuestionMultiChoice> {
+    @PersistenceContext(unitName = "EMSPU")
     private EntityManager em;
 
     @Override
@@ -24,13 +25,8 @@ public class QuestionFacade extends AbstractFacade<Question> {
         return em;
     }
 
-    public QuestionFacade() {
-        super(Question.class);
-    }
-    
-    public void flushQuestions()
-    {
-        em.flush();
+    public QuestionMultiChoiceFacade() {
+        super(QuestionMultiChoice.class);
     }
     
 }

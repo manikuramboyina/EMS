@@ -3,18 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.EMS.entities;
+package com.EMS.facade;
 
+import com.EMS.entities.Student;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author mani
+ * @author Saurav
  */
 @Stateless
-public class QuestionMultiChoiceFacade extends AbstractFacade<QuestionMultiChoice> {
+public class StudentFacade extends AbstractFacade<Student> {
     @PersistenceContext(unitName = "EMSPU")
     private EntityManager em;
 
@@ -23,8 +24,8 @@ public class QuestionMultiChoiceFacade extends AbstractFacade<QuestionMultiChoic
         return em;
     }
 
-    public QuestionMultiChoiceFacade() {
-        super(QuestionMultiChoice.class);
+    public StudentFacade() {
+        super(Student.class);
     }
     
 }

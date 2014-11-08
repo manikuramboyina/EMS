@@ -1,5 +1,8 @@
-package com.EMS.entities;
+package com.EMS.controllers;
 
+import com.EMS.entities.ExamPaper;
+import com.EMS.entities.ExamSession;
+import com.EMS.facade.ExamSessionFacade;
 import com.EMS.entities.util.JsfUtil;
 import com.EMS.entities.util.PaginationHelper;
 import java.io.IOException;
@@ -29,7 +32,7 @@ public class ExamSessionController implements Serializable {
 
     private ExamSession current;
     private DataModel items = null;
-    @EJB private com.EMS.entities.ExamSessionFacade ejbFacade;
+    @EJB private com.EMS.facade.ExamSessionFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     @Inject private ExamPaper ePaper;

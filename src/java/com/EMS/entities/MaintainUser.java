@@ -7,8 +7,8 @@ package com.EMS.entities;
 
 import com.EMS.entities.Student;
 import com.EMS.entities.User;
-import com.EMS.entities.UserFacade;
-import com.EMS.entities.StudentFacade;
+import com.EMS.facade.UserFacade;
+import com.EMS.facade.StudentFacade;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

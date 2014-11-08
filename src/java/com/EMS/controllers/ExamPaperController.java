@@ -1,5 +1,7 @@
-package com.EMS.entities;
+package com.EMS.controllers;
 
+import com.EMS.entities.ExamPaper;
+import com.EMS.facade.ExamPaperFacade;
 import com.EMS.entities.util.JsfUtil;
 import com.EMS.entities.util.PaginationHelper;
 
@@ -23,7 +25,7 @@ public class ExamPaperController implements Serializable {
     private ExamPaper current;
     private DataModel items = null;
     @EJB
-    private com.EMS.entities.ExamPaperFacade ejbFacade;
+    private com.EMS.facade.ExamPaperFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 

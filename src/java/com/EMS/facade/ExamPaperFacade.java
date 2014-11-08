@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.EMS.entities;
+package com.EMS.facade;
 
+import com.EMS.entities.ExamPaper;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Saurav
  */
 @Stateless
-public class ExamSessionFacade extends AbstractFacade<ExamSession> {
+public class ExamPaperFacade extends AbstractFacade<ExamPaper> {
     @PersistenceContext(unitName = "EMSPU")
     private EntityManager em;
 
@@ -23,8 +24,8 @@ public class ExamSessionFacade extends AbstractFacade<ExamSession> {
         return em;
     }
 
-    public ExamSessionFacade() {
-        super(ExamSession.class);
+    public ExamPaperFacade() {
+        super(ExamPaper.class);
     }
     
 }

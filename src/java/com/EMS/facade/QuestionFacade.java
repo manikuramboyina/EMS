@@ -3,20 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.EMS.entities;
+package com.EMS.facade;
 
+import com.EMS.entities.Question;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 /**
  *
  * @author mani
  */
 @Stateless
-public class SubjectFacade extends AbstractFacade<Subject> {
-
-    @PersistenceContext(unitName = "EMSPU")
+public class QuestionFacade extends AbstractFacade<Question> {
+    @PersistenceContext(unitName = "EMSPU",type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
 
     @Override
@@ -24,8 +25,13 @@ public class SubjectFacade extends AbstractFacade<Subject> {
         return em;
     }
 
-    public SubjectFacade() {
-        super(Subject.class);
+    public QuestionFacade() {
+        super(Question.class);
     }
-
+    
+    public void flushQuestions()
+    {
+        em.flush();
+    }
+    
 }

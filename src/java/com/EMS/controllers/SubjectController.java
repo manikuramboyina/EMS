@@ -1,5 +1,7 @@
-package com.EMS.entities;
+package com.EMS.controllers;
 
+import com.EMS.entities.Subject;
+import com.EMS.facade.SubjectFacade;
 import com.EMS.entities.util.JsfUtil;
 import com.EMS.entities.util.JsfUtil.PersistAction;
 
@@ -25,7 +27,7 @@ import javax.inject.Inject;
 public class SubjectController implements Serializable {
 
     @EJB
-    private com.EMS.entities.SubjectFacade ejbFacade;
+    private com.EMS.facade.SubjectFacade ejbFacade;
     private List<Subject> items = null;
     private Subject selected;
 

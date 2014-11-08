@@ -1,5 +1,7 @@
-package com.EMS.entities;
+package com.EMS.controllers;
 
+import com.EMS.entities.User;
+import com.EMS.facade.UserFacade;
 import com.EMS.entities.util.JsfUtil;
 import com.EMS.entities.util.PaginationHelper;
 
@@ -15,33 +17,30 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import javax.inject.Inject;
 
-@Named("studentController")
+@Named("userController")
 @SessionScoped
-public class StudentController implements Serializable {
+public class UserController implements Serializable {
 
-    private Student current;
+    private User current;
     private DataModel items = null;
     @EJB
-    private com.EMS.entities.StudentFacade ejbFacade;
+    private com.EMS.facade.UserFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    @Inject
-    private ExamPaper ePaper;
 
-    public StudentController() {
+    public UserController() {
     }
 
-    public Student getSelected() {
+    public User getSelected() {
         if (current == null) {
-            current = new Student();
+            current = new User();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private StudentFacade getFacade() {
+    private UserFacade getFacade() {
         return ejbFacade;
     }
 
@@ -69,33 +68,21 @@ public class StudentController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Student) getItems().getRowData();
+        current = (User) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View?faces-redirect=true";
+        return "View";
     }
 
     public String prepareCreate() {
-        current = new Student();
+        current = new User();
         selectedItemIndex = -1;
-        return "Create?faces-redirect=true";
-    }
-
-    public String prepareListView() {
-        current = (Student) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        System.out.println(">>>> " + current.getName() + " ##" + selectedItemIndex);
-        return "ExamView?faces-redirect=true";
-    }
-
-    public String prepareExamView(CourseModule mod) {
-        ePaper.setModule(mod);
-        return "ExamStartPage?faces-redirect=true";
+        return "Create";
     }
 
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("StudentCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UserCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -104,7 +91,7 @@ public class StudentController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Student) getItems().getRowData();
+        current = (User) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -112,7 +99,7 @@ public class StudentController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("StudentUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UserUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -121,7 +108,7 @@ public class StudentController implements Serializable {
     }
 
     public String destroy() {
-        current = (Student) getItems().getRowData();
+        current = (User) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -145,7 +132,7 @@ public class StudentController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("StudentDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UserDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -201,21 +188,21 @@ public class StudentController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public Student getStudent(java.lang.Long id) {
+    public User getUser(java.lang.Long id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Student.class)
-    public static class StudentControllerConverter implements Converter {
+    @FacesConverter(forClass = User.class)
+    public static class UserControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            StudentController controller = (StudentController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "studentController");
-            return controller.getStudent(getKey(value));
+            UserController controller = (UserController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "userController");
+            return controller.getUser(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -235,11 +222,11 @@ public class StudentController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Student) {
-                Student o = (Student) object;
+            if (object instanceof User) {
+                User o = (User) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Student.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + User.class.getName());
             }
         }
 

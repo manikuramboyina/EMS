@@ -6,7 +6,7 @@
 package com.EMS.entities.util;
 
 import com.EMS.entities.Subject;
-import com.EMS.entities.SubjectController;
+import com.EMS.controllers.SubjectController;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

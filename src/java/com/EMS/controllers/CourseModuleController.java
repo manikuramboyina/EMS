@@ -1,5 +1,7 @@
-package com.EMS.entities;
+package com.EMS.controllers;
 
+import com.EMS.entities.CourseModule;
+import com.EMS.facade.CourseModuleFacade;
 import com.EMS.entities.util.JsfUtil;
 import com.EMS.entities.util.PaginationHelper;
 
@@ -24,7 +26,7 @@ public class CourseModuleController implements Serializable {
     private CourseModule current;
     private DataModel items = null;
     @EJB
-    private com.EMS.entities.CourseModuleFacade ejbFacade;
+    private com.EMS.facade.CourseModuleFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 

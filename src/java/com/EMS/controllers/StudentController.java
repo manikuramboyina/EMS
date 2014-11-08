@@ -1,13 +1,17 @@
-package com.EMS.entities;
+package com.EMS.controllers;
 
+import com.EMS.entities.CourseModule;
+import com.EMS.entities.ExamPaper;
+import com.EMS.entities.Student;
+import com.EMS.facade.StudentFacade;
 import com.EMS.entities.util.JsfUtil;
 import com.EMS.entities.util.PaginationHelper;
-import com.EMS.enums.QuestionTypes;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -17,78 +21,31 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
-@Named("questionController")
-@javax.faces.view.ViewScoped
-public class QuestionController implements Serializable {
+@Named("studentController")
+@SessionScoped
+public class StudentController implements Serializable {
 
-    private Question current;
+    private Student current;
     private DataModel items = null;
     @EJB
-    private com.EMS.entities.QuestionFacade ejbFacade;
+    private com.EMS.facade.StudentFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    private String createquestionTypeView="/templates/test.xhtml";
-    private String editquestionTypeView="/templates/test.xhtml";
-    private String viewquestionTypeView="/templates/test.xhtml";
+    @Inject
+    private ExamPaper ePaper;
 
-    public String getEditquestionTypeView() {
-        return editquestionTypeView;
+    public StudentController() {
     }
 
-    public void setEditquestionTypeView(String editquestionTypeView) {
-        this.editquestionTypeView = editquestionTypeView;
-    }
-
-    public String getViewquestionTypeView() {
-        return viewquestionTypeView;
-    }
-
-    public void setViewquestionTypeView(String viewquestionTypeView) {
-        this.viewquestionTypeView = viewquestionTypeView;
-    }
-    private QuestionTypes questionType;
-
-    public String getCreatequestionTypeView() {
-        return createquestionTypeView;
-    }
-
-    public void setCreatequestionTypeView(String createquestionTypeView) {
-        this.createquestionTypeView = createquestionTypeView;
-    }
-
-    public QuestionTypes getQuestionType() {
-        return questionType;
-    }
-
-    public void setQuestionType(QuestionTypes questionType) {
-        this.questionType = questionType;
-    }
-
-    public QuestionController() {
-    }
-    
-    public void onQuestionTypeChange()
-    {
-        this.createquestionTypeView = ResourceBundle.getBundle("/Bundle").getString("createQuestionTemplatePath")+questionType.toString().toLowerCase()+".xhtml";
-    }
-    
-    public QuestionTypes[] QuestionTypesArray()
-    {
-        return QuestionTypes.values();
-    }
-
-    public Question getSelected() {
+    public Student getSelected() {
         if (current == null) {
-            current = new Question();
+            current = new Student();
             selectedItemIndex = -1;
         }
         return current;
     }
-    public void setSelected(Question selected) {
-       current = selected;
-    }
 
-    private QuestionFacade getFacade() {
+    private StudentFacade getFacade() {
         return ejbFacade;
     }
 
@@ -116,24 +73,33 @@ public class QuestionController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Question) getItems().getRowData();
+        current = (Student) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
+        return "View?faces-redirect=true";
     }
 
     public String prepareCreate() {
-        current = new Question();
+        current = new Student();
         selectedItemIndex = -1;
-        return "Create";
+        return "Create?faces-redirect=true";
+    }
+
+    public String prepareListView() {
+        current = (Student) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        System.out.println(">>>> " + current.getName() + " ##" + selectedItemIndex);
+        return "ExamView?faces-redirect=true";
+    }
+
+    public String prepareExamView(CourseModule mod) {
+        ePaper.setModule(mod);
+        return "ExamStartPage?faces-redirect=true";
     }
 
     public String create() {
         try {
-            current.setTypeOfQuestion(QuestionTypes.ESSAY);
             getFacade().create(current);
-            getFacade().flushQuestions();
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("QuestionCreated"));
-            recreateModel();
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("StudentCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -142,15 +108,15 @@ public class QuestionController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Question) getItems().getRowData();
+        current = (Student) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return ResourceBundle.getBundle("/Bundle").getString("editQuestionTemplatePath")+current.getTypeOfQuestion().toString().toLowerCase()+".xhtml";
+        return "Edit";
     }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("QuestionUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("StudentUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -159,6 +125,7 @@ public class QuestionController implements Serializable {
     }
 
     public String destroy() {
+        current = (Student) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -182,7 +149,7 @@ public class QuestionController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("QuestionDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("StudentDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -238,21 +205,21 @@ public class QuestionController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public Question getQuestion(java.lang.Long id) {
+    public Student getStudent(java.lang.Long id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Question.class)
-    public static class QuestionControllerConverter implements Converter {
+    @FacesConverter(forClass = Student.class)
+    public static class StudentControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            QuestionController controller = (QuestionController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "questionController");
-            return controller.getQuestion(getKey(value));
+            StudentController controller = (StudentController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "studentController");
+            return controller.getStudent(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -272,11 +239,11 @@ public class QuestionController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Question) {
-                Question o = (Question) object;
+            if (object instanceof Student) {
+                Student o = (Student) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Question.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Student.class.getName());
             }
         }
 

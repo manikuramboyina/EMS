@@ -1,13 +1,15 @@
-package com.EMS.entities;
+package com.EMS.controllers;
 
+import com.EMS.entities.Question;
+import com.EMS.facade.QuestionFacade;
 import com.EMS.entities.util.JsfUtil;
 import com.EMS.entities.util.PaginationHelper;
+import com.EMS.enums.QuestionTypes;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -15,30 +17,80 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 
-@Named("userController")
-@SessionScoped
-public class UserController implements Serializable {
+@Named("questionController")
+@javax.faces.view.ViewScoped
+public class QuestionController implements Serializable {
 
-    private User current;
+    private Question current;
     private DataModel items = null;
     @EJB
-    private com.EMS.entities.UserFacade ejbFacade;
+    private com.EMS.facade.QuestionFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private String createquestionTypeView="/templates/test.xhtml";
+    private String editquestionTypeView="/templates/test.xhtml";
+    private String viewquestionTypeView="/templates/test.xhtml";
 
-    public UserController() {
+    public String getEditquestionTypeView() {
+        return editquestionTypeView;
     }
 
-    public User getSelected() {
+    public void setEditquestionTypeView(String editquestionTypeView) {
+        this.editquestionTypeView = editquestionTypeView;
+    }
+
+    public String getViewquestionTypeView() {
+        return viewquestionTypeView;
+    }
+
+    public void setViewquestionTypeView(String viewquestionTypeView) {
+        this.viewquestionTypeView = viewquestionTypeView;
+    }
+    private QuestionTypes questionType;
+
+    public String getCreatequestionTypeView() {
+        return createquestionTypeView;
+    }
+
+    public void setCreatequestionTypeView(String createquestionTypeView) {
+        this.createquestionTypeView = createquestionTypeView;
+    }
+
+    public QuestionTypes getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(QuestionTypes questionType) {
+        this.questionType = questionType;
+    }
+
+    public QuestionController() {
+    }
+    
+    public void onQuestionTypeChange()
+    {
+        this.createquestionTypeView = ResourceBundle.getBundle("/Bundle").getString("createQuestionTemplatePath")+questionType.toString().toLowerCase()+".xhtml";
+    }
+    
+    public QuestionTypes[] QuestionTypesArray()
+    {
+        return QuestionTypes.values();
+    }
+
+    public Question getSelected() {
         if (current == null) {
-            current = new User();
+            current = new Question();
             selectedItemIndex = -1;
         }
         return current;
     }
+    public void setSelected(Question selected) {
+       current = selected;
+    }
 
-    private UserFacade getFacade() {
+    private QuestionFacade getFacade() {
         return ejbFacade;
     }
 
@@ -66,21 +118,24 @@ public class UserController implements Serializable {
     }
 
     public String prepareView() {
-        current = (User) getItems().getRowData();
+        current = (Question) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new User();
+        current = new Question();
         selectedItemIndex = -1;
         return "Create";
     }
 
     public String create() {
         try {
+            current.setTypeOfQuestion(QuestionTypes.ESSAY);
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UserCreated"));
+            getFacade().flushQuestions();
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("QuestionCreated"));
+            recreateModel();
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -89,15 +144,15 @@ public class UserController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (User) getItems().getRowData();
+        current = (Question) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
+        return ResourceBundle.getBundle("/Bundle").getString("editQuestionTemplatePath")+current.getTypeOfQuestion().toString().toLowerCase()+".xhtml";
     }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UserUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("QuestionUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -106,7 +161,6 @@ public class UserController implements Serializable {
     }
 
     public String destroy() {
-        current = (User) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -130,7 +184,7 @@ public class UserController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UserDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("QuestionDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -186,21 +240,21 @@ public class UserController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public User getUser(java.lang.Long id) {
+    public Question getQuestion(java.lang.Long id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = User.class)
-    public static class UserControllerConverter implements Converter {
+    @FacesConverter(forClass = Question.class)
+    public static class QuestionControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            UserController controller = (UserController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "userController");
-            return controller.getUser(getKey(value));
+            QuestionController controller = (QuestionController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "questionController");
+            return controller.getQuestion(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -220,11 +274,11 @@ public class UserController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof User) {
-                User o = (User) object;
+            if (object instanceof Question) {
+                Question o = (Question) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + User.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Question.class.getName());
             }
         }
 
