@@ -4,7 +4,6 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
-    
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -22,10 +21,64 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
-    
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>bootstrap</param-value>
     </context-param>
-    
+    <security-constraint>
+        <display-name>adminConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>admin</web-resource-name>
+            <description/>
+            <url-pattern>/faces/Admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>lecturerConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>lecturer</web-resource-name>
+            <description/>
+            <url-pattern>/faces/Lecturer/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>lecturer</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>studentConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>student</web-resource-name>
+            <description/>
+            <url-pattern>/faces/Student/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>student</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>jdbc-realm</realm-name>
+        <form-login-config>
+            <form-login-page>/faces/login.xhtml</form-login-page>
+            <form-error-page>/faces/error.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description/>
+        <role-name>admin</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>lecturer</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>student</role-name>
+    </security-role>
 </web-app>
